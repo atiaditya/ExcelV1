@@ -6,9 +6,14 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'f5a117a3ab54a2f5476857b652a0c8a6'
 
 @app.route('/', methods = ['GET', 'POST'])
-@app.route('/home', methods = ['GET', 'POST'])
-def home():
+
+def index():
 	form = MachineForm()
-	return render_template('home.html', form=form)
+	return render_template('index.html', form=form)
+		
+@app.route('/4options', methods = ['GET','POST'])
+def options():
+	return render_template('options.html')
+
 if(__name__ == '__main__'):
 	app.run()
