@@ -1,0 +1,15 @@
+<html>
+
+	<head>
+		<title>Home Page</title>
+	</head>
+
+	<body>
+		<form method = "POST", action = "/">
+			{{ form.hidden_tag() }}
+			{{ form.machine_serial_number.label }}
+			{{ form.machine_serial_number }}
+			{{ form.submit }}
+		</form>
+	</body>
+</html>
