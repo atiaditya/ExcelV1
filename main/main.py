@@ -15,16 +15,26 @@ def index():
 	form = MachineForm()
 	if(form.validate_on_submit()):
 		msn = form.machine_serial_number.data
-		print(msn)
+		#print(msn)
 		if(mongo.db.mrc.find_one({"machine_serial_number": msn})):
 			return redirect(url_for('insert_service'))
 	flash('Enter correct machine serial number')
 	return render_template('index.html', form=form)
 
-@app.route('/insertservice', methods = ['GET', 'POST'])
+@app.route('/insert_service', methods = ['GET', 'POST'])
 def insert_service():
 	form = InsertService()
-
+	print('insert ki ocham')
+	if(form.validate_on_submit()):
+		model = form.model.data
+		engineer_name = form.engineer_name.data
+		prev_mtr_rdng = form.prev_mtr_rdng.data
+		present_mtr_rdng = form.present_mtr_rdng.data
+		insert_row = {"model": model, "engineer_name": engineer_name, 
+		"prev_mtr_rdng": prev_mtr_rdng, "present_mtr_rdng": present_mtr_rdng}
+		#print('inserted')
+		x = mongo.db.mrc.insert_one(insert_row)
+		flash('Row added succesfully')
 	return render_template('insert_service.html', form=form)
 
 
