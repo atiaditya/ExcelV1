@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+		<link rel= "stylesheet" href = "../static/nav_style.css">
+		
+		{% if title %}
+			<title>{{ title }} page</title>
+		{% else %}
+			<title> Your Page </title>
+		{% endif %}
+	
+	</head>
+	<body>
+		<nav>
+			<a href="#">MRC</a>
+			<a href="#">Call Log</a>
+			<a href="#">SRC</a>
+			<a href="#">SCN</a>
+		</nav>
+		{% block content %}
+		{% endblock content %}
+	</body>
+</html>

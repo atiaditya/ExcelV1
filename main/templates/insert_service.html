@@ -1,26 +1,19 @@
-<html>
-
-	<head>
-		<title>Home Page</title>
-	</head>
-
-	<body>
-		<form method = "POST", action = "/">
-			{{ form.hidden_tag() }}
-			{{ form.model.label }}
-			{{ form.model }}
-			<br>
-			{{ form.engineer_name.label }}
-			{{ form.engineer_name }}
-			<br>
-			{{ form.prev_mtr_rdng.label }}
-			{{ form.prev_mtr_rdng }}
-			<br>
-			{{ form.present_mtr_rdng.label }}
-			{{ form.present_mtr_rdng }}
-			<br>
-			{{ form.submit }}
-		</form>
-	</body>
-	
-</html>
+{% extends "base.html" %}
+{% block content %}
+	<form method = "POST", action = "/">
+		{{ form.hidden_tag() }}
+		{{ form.model.label }}
+		{{ form.model }}
+		<br>
+		{{ form.engineer_name.label }}
+		{{ form.engineer_name }}
+		<br>
+		{{ form.prev_mtr_rdng.label }}
+		{{ form.prev_mtr_rdng }}
+		<br>
+		{{ form.present_mtr_rdng.label }}
+		{{ form.present_mtr_rdng }}
+		<br>
+		{{ form.submit }}
+	</form>
+{% endblock content %}
