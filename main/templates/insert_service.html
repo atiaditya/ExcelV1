@@ -1,5 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
+
+	<table>
+		{% for doc in mrc %}
+		<tr>
+			
+			<td>
+				{% if doc['model'] %}
+				{{ doc['model'] }}
+				{%  endif %}
+			</td>
+
+			<td>
+				{% if doc['engineer_name'] %}
+				{{ doc['engineer_name'] }}
+				{%  endif %}
+			</td>
+
+			<td>
+				{% if doc['prev_mtr_rdng'] %}
+				{{ doc['prev_mtr_rdng'] }}
+				{%  endif %}
+			</td>
+
+			<td>
+				{% if doc['present_mtr_rdng'] %}
+				{{ doc['present_mtr_rdng'] }}
+				{%  endif %}
+			</td>
+	
+		</tr>
+		{% endfor %}
+	</table>
+
 	<form method = "POST">
 		{{ form.hidden_tag() }}
 		<br>
@@ -17,4 +50,5 @@
 		<br>
 		{{ form.submit }}
 	</form>
+
 {% endblock content %}

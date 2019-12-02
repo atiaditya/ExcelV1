@@ -5,7 +5,8 @@ from wtforms.validators import InputRequired, Length
 class MachineForm(FlaskForm):
 	machine_serial_number= StringField('Machine Serial no', 
 		validators = [InputRequired(), Length(min=5,max=20)])
-	submit = SubmitField('Submit')
+	register = SubmitField('Submit')
+	insert = SubmitField('Submit')
 
 class InsertService(FlaskForm):
 	model = StringField('Model', validators = [InputRequired()])
