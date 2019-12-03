@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import InputRequired, Length
 
 class MachineForm(FlaskForm):
@@ -15,5 +15,5 @@ class InsertService(FlaskForm):
 	qty =  StringField('Quantity', validators = [InputRequired()])
 	yeild = StringField('Yield', validators = [InputRequired()])
 	exec_name = StringField('Engineer', validators = [InputRequired()])
-	remarks = StringField('Remarks')
+	remarks = TextAreaField('Remarks', )
 	submit = SubmitField('Submit')

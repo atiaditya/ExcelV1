@@ -54,7 +54,7 @@ def insert_service():
 			remarks = form.remarks.data
 			row = {"_id": id, "challan": challan, "prev_mtr_rdng": prev_mtr_rdng,
 			"present_mtr_rdng": present_mtr_rdng, "qty": qty,
-			 "yield": yeild, "exec_name": exec_name}
+			 "yield": yeild, "exec_name": exec_name, "remarks": remarks}
 			#print('inserted')
 			x = mongo.db.ServiceObject.insert_one(row)
 			#print(x, 'hey hi')

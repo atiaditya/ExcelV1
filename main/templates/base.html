@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
-		<link rel= "stylesheet" href = "../static/nav_style.css">
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='nav_style.css') }}">
 		
 		{% if title %}
 			<title>{{ title }} page</title>

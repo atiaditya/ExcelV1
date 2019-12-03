@@ -3,7 +3,9 @@
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='nav_style.css') }}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900">
+
         <title>Excel Technologies</title>
     </head>
     <body>
@@ -20,11 +22,11 @@
                 <!--<button onclick="window.location.href = 'http://127.0.0.1:5000/profile';" class="btn btn-white btn-animated">Record</button>-->
 		<form method = "POST", action = "/">
 			{{ form.hidden_tag() }}
-			{{ form.machine_serial_number.label }}
+			{{ form.machine_serial_number.label(style='font-size:18px;color: white;font-family: "Lato", sans-serif;padding-right:20px;letter-spacing: 2px;') }}
 			{{ form.machine_serial_number }}
             <br>
-			{{ form.register }}
-            {{ form.enter }}
+			{{ form.register(class= 'button_style') }}
+            {{ form.enter(class= 'button_style') }}
 		</form>
             </div>
             <!--<div>
