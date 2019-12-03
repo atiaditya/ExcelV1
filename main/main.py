@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from forms import MachineForm, InsertService
 from flask_pymongo import PyMongo
+from bson import objectid
 
 app = Flask(__name__)
 
@@ -17,38 +18,50 @@ def index():
 		msn = form.machine_serial_number.data
 		#print(msn)
 		session['msn'] = msn
-		'''
-		if('Enter' in request.form):
-			if(mongo.db.mrc.find_one({"machine_serial_number": msn})):
+		#print(request.form.keys())
+		if('enter' in request.form):
+			print('yo bitch')
+			if(mongo.db.MRCObject.find_one({"msn": msn})):
+				print('vachindi roy')
 				return redirect(url_for('insert_service'))
 			
-		elif('Register' in request.form);
+		elif('register' in request.form):
 			return redirect(url_for('register'))
-		'''
-		return redirect(url_for('insert_service'))
+		
+		#return redirect(url_for('insert_service'))
 	flash('Enter correct machine serial number')
 	return render_template('index.html', form=form)
 
 @app.route('/insert_service', methods = ['GET', 'POST'])
 def insert_service():
+	#print(session)
 	if('msn' in session):
 		msn = session['msn']
-		print(msn)
-		mrc = mongo.db.mrc.find({"machine_serial_number": msn})
-		session.pop('msn',None)
+		print(msn,'this is insert page')
+		mrc = mongo.db.MRCObject.find_one({"msn": msn})
+		services = mongo.db.ServiceObject.find({"_id": { "$in" : mrc['services'] } })
+		print(mrc['services'])
 		form = InsertService()
 		#print('insert ki ocham')
 		if(form.validate_on_submit()):
-			model = form.model.data
-			engineer_name = form.engineer_name.data
+			session.pop('msn',None)
+			id = objectid.ObjectId()
+			challan = form.challan.data
 			prev_mtr_rdng = form.prev_mtr_rdng.data
 			present_mtr_rdng = form.present_mtr_rdng.data
-			insert_row = {"machine_serial_number": msn, "model": model, "engineer_name": engineer_name, 
-			"prev_mtr_rdng": prev_mtr_rdng, "present_mtr_rdng": present_mtr_rdng}
+			qty = form.qty.data
+			yeild = form.yeild.data
+			exec_name = form.exec_name.data
+			remarks = form.remarks.data
+			row = {"_id": id, "challan": challan, "prev_mtr_rdng": prev_mtr_rdng,
+			"present_mtr_rdng": present_mtr_rdng, "qty": qty,
+			 "yield": yeild, "exec_name": exec_name}
 			#print('inserted')
-			x = mongo.db.mrc.insert_one(insert_row)
+			x = mongo.db.ServiceObject.insert_one(row)
+			#print(x, 'hey hi')
+			mongo.db.MRCObject.update({"msn": msn}, { "$addToSet" : { "services": id } })
 			flash('Row added succesfully')
-		return render_template('insert_service.html', form=form, title = "InsertService", mrc=mrc)
+		return render_template('insert_service.html', form=form, title = "InsertService", services=services)
 	else:
 		return render_template('error_page.html')
 

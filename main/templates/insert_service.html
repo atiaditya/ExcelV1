@@ -1,19 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-
+	<br>
 	<table>
-		{% for doc in mrc %}
+
+		<tr>
+			<th>Challan</th>
+			<th>Previous meter reading</th>
+			<th>Present meter reading</th>
+			<th>Quantity</th>
+			<th>Yield</th>
+			<th>Engineer name</th>
+			<th>Remarks</th>
+		</tr>
+
+		{% for doc in services %}
 		<tr>
 			
 			<td>
-				{% if doc['model'] %}
-				{{ doc['model'] }}
-				{%  endif %}
-			</td>
-
-			<td>
-				{% if doc['engineer_name'] %}
-				{{ doc['engineer_name'] }}
+				{% if doc['challan'] %}
+				{{ doc['challan'] }}
 				{%  endif %}
 			</td>
 
@@ -28,6 +33,30 @@
 				{{ doc['present_mtr_rdng'] }}
 				{%  endif %}
 			</td>
+
+			<td>
+				{% if doc['qty'] %}
+				{{ doc['qty'] }}
+				{%  endif %}
+			</td>
+
+			<td>
+				{% if doc['yield'] %}
+				{{ doc['yield'] }}
+				{%  endif %}
+			</td>
+
+			<td>
+				{% if doc['exec_name'] %}
+				{{ doc['exec_name'] }}
+				{%  endif %}
+			</td>
+
+			<td>
+				{% if doc['remarks'] %}
+				{{ doc['remarks'] }}
+				{%  endif %}
+			</td>
 	
 		</tr>
 		{% endfor %}
@@ -36,17 +65,23 @@
 	<form method = "POST">
 		{{ form.hidden_tag() }}
 		<br>
-		{{ form.model.label }}
-		{{ form.model }}
-		<br>
-		{{ form.engineer_name.label }}
-		{{ form.engineer_name }}
+		{{ form.challan.label }}
+		{{ form.challan }}
 		<br>
 		{{ form.prev_mtr_rdng.label }}
 		{{ form.prev_mtr_rdng }}
 		<br>
 		{{ form.present_mtr_rdng.label }}
 		{{ form.present_mtr_rdng }}
+		<br>
+		{{ form.qty.label }}
+		{{ form.qty }}
+		<br>
+		{{ form.yeild.label }}
+		{{ form.yeild }}
+		<br>
+		{{ form.exec_name.label }}
+		{{ form.exec_name }}
 		<br>
 		{{ form.submit }}
 	</form>

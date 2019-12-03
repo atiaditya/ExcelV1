@@ -10,10 +10,10 @@ class MachineForm(FlaskForm):
 
 class InsertService(FlaskForm):
 	challan =  StringField('Challan', validators = [InputRequired()])
-	qty =  StringField('Challan', validators = [InputRequired()])
-	yeild = StringField('Yield', validators = [InputRequired()])
-	remarks = StringField('Remarks')
-	engineer_name = StringField('Engineer', validators = [InputRequired()])
 	prev_mtr_rdng = StringField('Previous Meter Reading', validators = [InputRequired()])
 	present_mtr_rdng =  StringField('Present Meter Reading', validators = [InputRequired()])
+	qty =  StringField('Quantity', validators = [InputRequired()])
+	yeild = StringField('Yield', validators = [InputRequired()])
+	exec_name = StringField('Engineer', validators = [InputRequired()])
+	remarks = StringField('Remarks')
 	submit = SubmitField('Submit')
