@@ -1,0 +1,14 @@
+# MRCObject - creation and insertion 
+
+	db.createCollection("MRCObject")
+	db.MRCObject.insert({msn: '392480922286', customer: 'kamesh', address: 'mvp, vizag', 
+	phn: '9876543210', make_model: 'Sindah N411', install_date: '20-03-19', per_copy_charges: '20', services : []})
+
+# ServiceObject - creation and insertion
+
+id = ObjectId()
+db.ServiceObject.insert({_id: id, job_no: "12003", td_date: "03-07-19",challan: "56", prev_mtr_rdng: "123", present_mtr_rdng: "900",qty: "232", yield: "20", exec_name: "kranthi",remarks: "Nothing to say"})
+
+# Adding reference in Services list of MRCObject Collection
+
+db.MRCObject.update({customer: "kamesh"}, { $addToSet : { services: id } })

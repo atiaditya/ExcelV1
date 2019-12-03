@@ -5,11 +5,14 @@ from wtforms.validators import InputRequired, Length
 class MachineForm(FlaskForm):
 	machine_serial_number= StringField('Machine Serial no', 
 		validators = [InputRequired(), Length(min=5,max=20)])
-	register = SubmitField('Submit')
-	insert = SubmitField('Submit')
+	register = SubmitField('Register')
+	enter = SubmitField('Enter')
 
 class InsertService(FlaskForm):
-	model = StringField('Model', validators = [InputRequired()])
+	challan =  StringField('Challan', validators = [InputRequired()])
+	qty =  StringField('Challan', validators = [InputRequired()])
+	yeild = StringField('Yield', validators = [InputRequired()])
+	remarks = StringField('Remarks')
 	engineer_name = StringField('Engineer', validators = [InputRequired()])
 	prev_mtr_rdng = StringField('Previous Meter Reading', validators = [InputRequired()])
 	present_mtr_rdng =  StringField('Present Meter Reading', validators = [InputRequired()])
