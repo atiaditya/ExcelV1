@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from forms import MachineForm, InsertService
+from forms import MachineForm, InsertService, RegisterForm
 from flask_pymongo import PyMongo
 from bson import objectid
 
@@ -65,6 +65,28 @@ def insert_service():
 		return render_template('insert_service.html', form=form, title = "InsertService", services=services)
 	else:
 		return render_template('error_page.html')
+
+@app.route('/register', methods = ['GET', 'POST'])
+def register():
+	form = RegisterForm()
+	if(form.validate_on_submit()):
+		customer_name = form.customer.data
+		machine_serial_number = form.msn.data
+		address = form.address.data
+		phone = form.phn.data
+		make_model = form.make_model.data
+		instal_date = form.install_date.data
+		per_copy_charges = form.per_copy_charges.data
+		services = []
+
+		insert_row = {"msn": machine_serial_number, "customer": customer_name, "address": address, "phn": phone, 
+						"make_model": make_model, "install_date": instal_date, "per_copy_charges": per_copy_charges, "services": services}
+
+		x = mongo.db.MRCObject.insert_one(insert_row)
+		flash('Entered succesfully')
+		return redirect(url_for('register'))
+
+	return render_template('register_form.html', form = form, title = "RegisterForm")
 
 if(__name__ == '__main__'):
 	app.run(debug=True)
