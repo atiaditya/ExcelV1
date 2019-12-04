@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-	<form method = "POST" style= 'float: left; background:url("{{ url_for("static",filename="formbg.jpg") }}"); padding: 20 20 20 20;margin: 20 20 20 20; border: 20 20 20 20'>
+	<form method = "POST" style= 'float:left;background:url("{{ url_for("static",filename="formbg.jpg") }}"); padding: 20 20 20 20;margin: 20 20 20 20;border: 20 20 20 20;position: absolute;width: 400px'>
 		<legend style="font-size: 30px; font-weight: bold">Add Service</legend>
 		{{ form.hidden_tag() }}
 		<br>
@@ -42,7 +42,7 @@
 		{{ form.submit }}
 	</form>
 
-	<table class = "blueTable", style= 'float: left; padding: 20 20 20 20;margin: 20 20 20 20; border: 20 20 20 20'>
+	<table class = "blueTable", style= 'float:left;padding: 20 20 20 20;margin: 20 20 20 20;'>
 		<caption style= 'background:url("{{ url_for("static",filename="formbg.jpg") }}");'>MRC Card</caption>
 		<thead>
 			<tr>

@@ -20,7 +20,6 @@ def index():
 		session['msn'] = msn
 		#print(request.form.keys())
 		if('enter' in request.form):
-			print('yo bitch')
 			if(mongo.db.MRCObject.find_one({"msn": msn})):
 				#print('vachindi roy')
 				return redirect(url_for('insert_service'))
@@ -42,6 +41,7 @@ def insert_service():
 		#print('insert ki ocham')
 		mrc = mongo.db.MRCObject.find_one({"msn": msn})
 		services = mongo.db.ServiceObject.find({"_id": { "$in" : mrc['services'] } })
+		print('HI')
 		if(form.validate_on_submit()):
 			#session.pop('msn',None)
 			id = objectid.ObjectId()
@@ -55,7 +55,7 @@ def insert_service():
 			row = {"_id": id, "challan": challan, "prev_mtr_rdng": prev_mtr_rdng,
 			"present_mtr_rdng": present_mtr_rdng, "qty": qty,
 			 "yield": yeild, "exec_name": exec_name, "remarks": remarks}
-			#print('inserted')
+			print('inserted')
 			x = mongo.db.ServiceObject.insert_one(row)
 			#print(x, 'hey hi')
 			mongo.db.MRCObject.update({"msn": msn}, { "$addToSet" : { "services": id } })

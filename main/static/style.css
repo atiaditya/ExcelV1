@@ -17,7 +17,7 @@ body{
     font-family: "Lato",sans-serif;
     line-height: 1.7;
     padding: 25px;
-    height: 250px;
+    height: 100px;
 }
 
 .excel{
@@ -128,12 +128,13 @@ body{
 .btn{
     text-transform: uppercase;
     text-decoration: none;
-    padding: 15px 40px;
+    padding: 10px 25px;
     display: inline-block;
     border-radius: 100px;
     transition: all .2s;
     position: relative;
-    letter-spacing: 5px;
+    letter-spacing: 2px;
+
 }
 
 .btn:hover{
