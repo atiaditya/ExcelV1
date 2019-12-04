@@ -20,7 +20,7 @@ def index():
 		session['msn'] = msn
 		#print(request.form.keys())
 		if('enter' in request.form):
-			#print('yo bitch')
+			print('yo bitch')
 			if(mongo.db.MRCObject.find_one({"msn": msn})):
 				#print('vachindi roy')
 				return redirect(url_for('insert_service'))
