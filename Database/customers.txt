@@ -1,0 +1,129 @@
+customers
+machines
+services
+call_log
+engineers
+
+customers      --   (customer_id - PK)
+machines       --   (machine_id - PK,  customer_id - FK)
+services       --   (job_id - PK, call_id && machine_id - FK)
+call_log       --   (call_id - PK)
+engineers      --   (engineer_id - PK)
+
+
+CREATE TABLE customers(
+    customer_id serial PRIMARY KEY,
+    company1 VARCHAR(50) NOT NULL,
+    company2 VARCHAR(50),
+    customer1 VARCHAR(50) NOT NULL,
+    customer2 VARCHAR(50),
+    phone_no INTEGER NOT NULL,
+    landline VARCHAR(20),
+    email VARCHAR(40)
+);
+
+CREATE TABLE address(
+	customer_id INTEGER REFERENCES customers(customer_id),
+	plot_no VARCHAR(20) NOT NULL,
+	street VARCHAR(60) NOT NULL,
+	city VARCHAR(50) NOT NULL,
+	state VARCHAR(30) NOT NULL,
+    pincode VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE machines(
+	machine_id VARCHAR(30) PRIMARY KEY,
+	customer_id INTEGER REFERENCES customers(customer_id),
+	make VARCHAR (30) NOT NULL,
+	model VARCHAR (30) NOT NULL,
+	from_date DATE NOT NULL DEFAULT CURRENT_DATE,
+    type_of_contract VARCHAR(1) NOT NULL,
+    amcv INTEGER NOT NULL,
+	to_date DATE NOT NULL,
+    warranty INTEGER NOT NULL,
+    free_copies INTEGER NOT NULL,
+    initial_meter INTEGER NOT NULL,
+	per_copy_charges FLOAT(3) NOT NULL
+);
+
+CREATE TABLE services(
+    job_id serial PRIMARY KEY,
+    customer_id INTEGER REFERENCES customers(customer_id),
+    call_id INTEGER REFERENCES call_log(call_id),
+    machine_id VARCHAR(30) REFERENCES machines(machine_id),
+    docket_no INTEGER NOT NULL,
+    td_date DATE NOT NULL DEFAULT CURRENT_DATE,
+    challan VARCHAR(30) NOT NULL,
+    prev_mtr_rdg INTEGER NOT NULL,
+    present_mtr_rdg INTEGER NOT NULL,
+    yield FLOAT(10) NOT NULL,
+    engineer_name VARCHAR(40) NOT NULL,
+    remarks VARCHAR(50),
+    
+    status VARCHAR(5) NOT NULL,
+    time_dispatched DATE NOT NULL,
+    time_arrived DATE NOT NULL,
+    call_completed DATE,
+    symptom VARCHAR(50),
+    cause VARCHAR(50),
+    action VARCHAR(50),
+    total_qty INTEGER NOT NULL,
+    total_cost FLOAT(10) NOT NULL
+);
+
+CREATE TABLE service_parts(
+    job_id INTEGER REFERENCES services(job_id),
+    part_id INTEGER REFERENCES parts(part_id),
+    description VARCHAR(30) NOT NULL,
+    qty_used INTEGER NOT NULL,
+    value FLOAT(10) NOT NULL
+);
+
+CREATE TABLE call_log(
+    call_id INTEGER PRIMARY KEY,
+	customer_id INTEGER REFERENCES customers(customer_id),
+    machine_id VARCHAR(30) REFERENCES machines(machine_id),
+    present_mtr_rdg INTEGER NOT NULL,
+    engineer_id INTEGER REFERENCES engineers(engineer_id) ON DELETE CASCADE ON UPDATE CASCADE, 
+    remarks VARCHAR(50),
+    call_time TIME NOT NULL,
+    call_date DATE NOT NULL DEFAULT CURRENT_DATE,
+    callback BOOLEAN NOT NULL DEFAULT 0,
+    region VARCHAR(1) NOT NULL,
+    broken_call_date DATE,
+    broken_call_code VARCHAR(20),
+    docket_no INTEGER REFERENCES services(docket_no),
+    cmrs FLOAT(10)
+);
+
+CREATE TABLE engineers(
+    engineer_id INTEGER PRIMARY KEY,
+    engineer_name VARCHAR (30) NOT NULL
+);
+
+
+CREATE TABLE parts(
+    machine_id VARCHAR(30) REFERENCES machines(machine_id),
+    part_id serial PRIMARY KEY,
+    part_name VARCHAR(20) NOT NULL,
+    life INTEGER NOT NULL, 
+    cost FLOAT(10) NOT NULL
+);
+
+CREATE TABLE make(
+    part_id INTEGER REFERENCES parts(part_id),
+    model_no VARCHAR(30) NOT NULL,
+    speed INTEGER NOT NULL
+);
+
+/*CREATE TABLE drum(
+    part_id INTEGER REFERENCES parts(part_id)
+);
+
+CREATE TABLE developer(
+    part_id INTEGER REFERENCES parts(part_id)
+);
+
+CREATE TABLE toner(
+    part_id INTEGER REFERENCES parts(part_id)
+);*/
