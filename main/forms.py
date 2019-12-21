@@ -1,12 +1,15 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
+from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import InputRequired, Length
 
-class MachineForm(FlaskForm):
-	machine_serial_number= StringField('Machine Serial no', validators = [InputRequired(), Length(min=5,max=20)])
-	register = SubmitField('Register')
+class ViewMachine(FlaskForm):
+	choices = [('msn', 'Machine id'), ('cust', 'Customer'), ('company', 'Company')]
+	options = SelectField('Field name', choices = choices, validators = [InputRequired()])
+	search_by_field = StringField('Enter your machine id', validators = [InputRequired()])
 	enter = SubmitField('Enter')
 
+
+'''
 class InsertService(FlaskForm):
 	challan =  StringField('Challan', validators = [InputRequired()])
 	qty =  StringField('Quantity', validators = [InputRequired()])
@@ -26,3 +29,8 @@ class RegisterForm(FlaskForm):
 	install_date = StringField('Install Date', validators = [InputRequired()])
 	per_copy_charges = StringField('Per Copy Charges', validators = [InputRequired()])
 	submit = SubmitField('Submit')
+
+class CallLog(FlaskForm):
+
+	call_date = DateField('Call Date')
+'''

@@ -1,41 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='nav_style.css') }}">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900">
 
+<html lang="en">
+
+    <head>
         <title>Excel Technologies</title>
     </head>
+
     <body>
-        <header class="header">
-            <h1 class="excel">Excel Technologies</h1>
-            <!--<div class="logo-box">
-                <img src="logo.png" alt="Logo" class="logo">
-            </div>-->
-            <div class="text-box">
-                <h1 class="heading-primary">
-                    <span class="heading-primary-main">Call Service</span>
-                    <span class="heading-primary-sub">Experience The Best</span>
-                </h1>
-                <!--<button onclick="window.location.href = 'http://127.0.0.1:5000/profile';" class="btn btn-white btn-animated">Record</button>-->
 		<form method = "POST", action = "/">
 			{{ form.hidden_tag() }}
-            <div>
-    			{{ form.machine_serial_number.label(style='font-size:18px;color: white;font-family: "Lato", sans-serif;padding-right:20px;letter-spacing: 2px;') }}
-    			{{ form.machine_serial_number(style = 'height:20px') }}
-            </div>
-            <br>
-            <div style='margin-left: 50px'>
-			     {{ form.register(class= 'btn btn-animated', style = 'margin-right:16px') }}
-                {{ form.enter(class= 'btn btn-animated', style = 'margin-right:16px') }}
-            </div>
+            {{ form.options }}
+            {{ form.search_by_field }}
+            {{ form.enter }}
 		</form>
-            </div>
-            <!--<div>
-                <img src="menu.png" alt="menu" class="menu">
-            </div>-->
-        </header>
     </body>
+
 </html>

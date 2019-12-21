@@ -1,22 +1,26 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from forms import MachineForm, InsertService, RegisterForm
-from flask_pymongo import PyMongo
+#from forms import MachineForm, InsertService, RegisterForm
+from forms import ViewMachine
+import psycopg2
+import sqlalchemy as db
 from bson import objectid
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'f5a117a3ab54a2f5476857b652a0c8a6'
-app.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/test'
+url = 'postgresql+psycopg2://postgres:aditya123@localhost/excel'
 
-mongo = PyMongo(app)
+engine = db.create_engine(url)
+conn = engine.connect()
 
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/index', methods = ['GET', 'POST'])
 def index():
-	form = MachineForm()
+	form =ViewMachine()
 	if(form.validate_on_submit()):
-		msn = form.machine_serial_number.data
-		#print(msn)
+		msn = form.search_by_field.data
+		print(msn)
+		'''
 		session['msn'] = msn
 		#print(request.form.keys())
 		if('enter' in request.form):
@@ -26,7 +30,7 @@ def index():
 			
 		elif('register' in request.form):
 			return redirect(url_for('register'))
-
+		'''
 	#flash('Enter correct machine serial number')
 	return render_template('index.html', form=form)
 
