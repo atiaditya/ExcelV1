@@ -7,12 +7,38 @@
     </head>
 
     <body>
-		<form method = "POST", action = "/">
-			{{ form.hidden_tag() }}
-            {{ form.options }}
-            {{ form.search_by_field }}
-            {{ form.enter }}
+		<form method = "POST", action = "#" id = "form1">
+			{{ form1.hidden_tag() }}
+            {{ form1.options }}
+            {{ form1.search_by_field }}
+            {{ form1.submit }}
 		</form>
+        <h2>Select your machine: </h2>
+        <form method = "POST" action = "/call_log" id = "form2">
+            <table>
+                <tr>
+                    <th>Customer Id</th>
+                    <th>Company</th>
+                    <th>Machine Id</th>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Select</th>
+                </tr>
+                {% for row in display %}
+                    <tr>
+                        <td>{{row[0]}}</td>
+                        <td>{{row[1]}}</td>
+                        <td>{{row[2]}}</td>
+                        <td>{{row[3]}}</td>
+                        <td>{{row[4]}}</td>
+                        <td><input type = "radio" name = "machines" value = {{row[2]}}></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <input type = "submit" name = "submit" value = "submit">
+        </form>
+        
+
     </body>
 
 </html>
