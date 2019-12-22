@@ -1,4 +1,31 @@
 
+
+.myLabel {
+  text-align: right;
+  margin-right: 20px;
+  margin-left: 600px;
+  width: 100px;
+  float: left;
+  font-size: 15px;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+input[type=text] {
+  width: 20%;
+  height: 30px;
+  box-sizing: border-box;
+  padding: 7px 10px;
+  margin: 7px 0;
+}
+
+input[type=text]:focus {
+  background-color: lightblue;
+}
+
+textarea:focus, input:focus {
+  border: 2px solid #900;
+}
+
 .button_style {
    border-radius: 4px;
    background: linear-gradient(to right, #67b26b, #4ca2cb) !important;

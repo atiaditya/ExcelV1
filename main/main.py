@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from forms import MachineForm, InsertService, RegisterForm
+from forms import MachineForm, InsertService, RegisterForm, CallLogForm
 from flask_pymongo import PyMongo
 from bson import objectid
 
@@ -22,7 +22,7 @@ def index():
 		if('enter' in request.form):
 			if(mongo.db.MRCObject.find_one({"msn": msn})):
 				#print('vachindi roy')
-				return redirect(url_for('insert_service'))
+				return redirect(url_for('call_log'))
 			
 		elif('register' in request.form):
 			return redirect(url_for('register'))
@@ -87,6 +87,14 @@ def register():
 		return redirect(url_for('register'))
 
 	return render_template('register_form.html', form = form, title = "RegisterForm")
+
+@app.route('/call_log', methods = ['GET', 'POST'])
+def call_log():
+	form = CallLogForm()
+	return render_template('call_log.html', form = form)
+	#if(form.validate_on_submit()):
+
+		
 
 if(__name__ == '__main__'):
 	app.run(debug=True)

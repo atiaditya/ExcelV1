@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+	<div><h1><center>Call Log</center></h1><div>
+	<div>
+		<form method="POST">
+			{{ form.hidden_tag() }}
+			<br>
+			{{ form.customer_name.label(class="myLabel") }}
+			{{ form.customer_name }}
+			<br><br>
+			{{ form.phone_no.label(class="myLabel") }}
+			{{ form.phone_no }}
+			<br><br>
+			{{ form.call_type.label(class="myLabel") }}
+			{{ form.call_type }}
+			<br><br>
+			{{ form.model_no.label(class="myLabel") }}
+			{{ form.model_no }}
+			<br><br>
+			{{ form.call_reason.label(class="myLabel") }}
+			{{ form.call_reason }}
+			<br><br>
+			{{ form.mtr_rdng.label(class="myLabel") }}
+			{{ form.mtr_rdng }}
+			<br><br>
+			{{ form.call_time.label(class="myLabel") }}
+			{{ form.call_time }}
+			<br><br>
+			{{ form.engineer_name.label(class="myLabel") }}
+			{{ form.engineer_name }}
+			<br><br>
+			{{ form.remarks.label(class="myLabel") }}
+			{{ form.remarks }}
+			<br><br>
+		</form>
+	</div>
+{% endblock content %}
