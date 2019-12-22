@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				{% for msg in messages %}
+					{{ msg }}
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+        <form method = "POST" action = "#">
+
+        	{{ form.hidden_tag() }}
+        	<br>
+        	<br>
+        	{{ form.options }}
+        	{{ form.search_by_field }}
+        	{{ form.submit(formnovalidate = 'formnovalidate') }}
+        	<h2>Select the customer: </h2>
+            <table>
+                <tr>
+                    <th>Customer Id</th>
+                    <th>Company1</th>
+                    <th>Company2</th>
+                    <th>Customer1</th>
+                    <th>Customer2</th>
+                    <th>Phone no</th>
+                    <th>Email</th>
+                </tr>
+                {% for row in display %}
+                    <tr>
+                        <td>{{row[0]}}</td>
+                        <td>{{row[1]}}</td>
+                        <td>{{row[2]}}</td>
+                        <td>{{row[3]}}</td>
+                        <td>{{row[4]}}</td>
+                        <td>{{row[5]}}</td>
+                        <td>{{row[7]}}</td>
+                        <td><input type = "radio" name = "customers" value = {{row[0]}}></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <br>
+            {{ form.machine_id.label }}
+            {{ form.machine_id }}
+            <br>
+            <br>
+            {{ form.make.label }}
+            {{ form.make }}
+            <br>
+        	<br>
+            {{ form.model.label }}
+            {{ form.model }}
+            <br>
+        	<br>
+            {{ form.from_date.label }}
+            {{ form.from_date }}
+            <br>
+        	<br>
+            {{ form.to_date.label }}
+            {{ form.to_date }}
+            <br>
+        	<br>
+            {{ form.type_of_contract.label }}
+            {{ form.type_of_contract }}
+            <br>
+        	<br>
+            {{ form.amcv.label}}
+            {{ form.amcv }}
+            <br>
+        	<br>
+            {{ form.warranty.label }}
+            {{ form.warranty }}
+            <br>
+        	<br>
+            {{ form.initial_meter.label }}
+            {{ form.initial_meter }}
+            <br>
+        	<br>
+            {{ form.free_copies.label }}
+            {{ form.free_copies }}
+            <br>
+        	<br>
+            {{ form.per_copy_charges.label }}
+            {{ form.per_copy_charges }}
+            <br>
+        	<br>
+            <input type = "submit" name = "submit" value = "Submit">
+        </form>
+{% endblock content %}
+		
