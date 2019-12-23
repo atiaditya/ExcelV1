@@ -2,13 +2,24 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from forms import MachineForm, InsertService, RegisterForm, CallLogForm
 from flask_pymongo import PyMongo
 from bson import objectid
+import sqlalchemy as db
+from sqlalchemy import *
+from sqlalchemy.sql import select, and_, or_, not_
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'f5a117a3ab54a2f5476857b652a0c8a6'
-app.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/test'
 
-mongo = PyMongo(app)
+conn_string = 'postgresql+psycopg2://postgres:kamesh11@localhost/excel'
+engine = db.create_engine(conn_string)
+conn = engine.connect()
+meta = MetaData()
+
+engineers = db.Table('engineers', meta, autoload = True, autoload_with = engine)
+services = db.Table('services', meta, autoload = True, autoload_with = engine)
+customers = db.Table('customers', meta, autoload = True, autoload_with = engine)
+machines = db.Table('machines', meta, autoload = True, autoload_with = engine)
+call_log = db.Table('call_log', meta, autoload =True, autoload_with = engine)
 
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/index', methods = ['GET', 'POST'])
@@ -88,13 +99,36 @@ def register():
 
 	return render_template('register_form.html', form = form, title = "RegisterForm")
 
-@app.route('/call_log', methods = ['GET', 'POST'])
-def call_log():
+@app.route('/calllog', methods = ['GET', 'POST'])
+def calllog():
 	form = CallLogForm()
-	return render_template('call_log.html', form = form)
-	#if(form.validate_on_submit()):
+	mid = '103'
 
-		
+	sel = select(
+		[call_log.c.call_date, customers.c.customer1, call_log.c.engineer_id, 
+			engineers.c.engineer_name, call_log.c.present_mtr_rdg,
+				services.c.docket_no]
+	)
+
+	st = sel.where(
+		and_(
+			call_log.c.machine_id == mid,
+			call_log.c.engineer_id == engineers.c.engineer_id,
+			call_log.c.customer_id == customers.c.customer_id,
+			call_log.c.call_id == services.c.call_id
+		)
+	)
+
+	result = conn.execute(st)
+	display = []
+	for row in result:
+		display.append(row)
+
+	print(display)
+	print(len(display))
+	print(display[-3:])
+
+	return render_template('call_log.html', form = form, result = result)
 
 if(__name__ == '__main__'):
 	app.run(debug=True)
