@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from forms import MachineForm, InsertService, RegisterForm, CallLogForm
-from flask_pymongo import PyMongo
-from bson import objectid
+from forms import GetMI, GetCI, GetMIByCI, AddMachine
+import psycopg2
 import sqlalchemy as db
 from sqlalchemy import *
 from sqlalchemy.sql import select, and_, or_, not_
@@ -10,94 +9,149 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'f5a117a3ab54a2f5476857b652a0c8a6'
 
-conn_string = 'postgresql+psycopg2://postgres:kamesh11@localhost/excel'
+conn_string = 'postgresql+psycopg2://postgres:aditya123@localhost/excel'
+
 engine = db.create_engine(conn_string)
 conn = engine.connect()
 meta = MetaData()
 
-engineers = db.Table('engineers', meta, autoload = True, autoload_with = engine)
-services = db.Table('services', meta, autoload = True, autoload_with = engine)
 customers = db.Table('customers', meta, autoload = True, autoload_with = engine)
 machines = db.Table('machines', meta, autoload = True, autoload_with = engine)
-call_log = db.Table('call_log', meta, autoload =True, autoload_with = engine)
 
 @app.route('/', methods = ['GET', 'POST'])
-@app.route('/index', methods = ['GET', 'POST'])
 def index():
-	form = MachineForm()
-	if(form.validate_on_submit()):
-		msn = form.machine_serial_number.data
-		#print(msn)
-		session['msn'] = msn
-		#print(request.form.keys())
-		if('enter' in request.form):
-			if(mongo.db.MRCObject.find_one({"msn": msn})):
-				#print('vachindi roy')
+	form1 = GetMI()
+	form2 = GetCI()
+	display = []
+	if(form1.validate_on_submit() and ('submit' in request.form)):
+
+		if(request.form['submit'] == 'login'):
+
+			session['machine_id'] = form1.machine_id.data
+			return redirect(url_for('call_log'))
+
+
+	elif(form2.validate_on_submit() and ('submit' in request.form)):
+		print('hii')
+		if(request.form['submit'] == 'enter'):
+
+			choice = form2.options.data
+			display = []
+			name = form2.search_by_field.data
+
+			sel = select(
+				[customers]
+			)
+
+			if(choice == 'customer'):
+
+				st = sel.where( 
+						customers.c.customer1 == name
+					)
+			else:
+				st = sel.where( 
+						customers.c.company1 == name
+				)
+
+			result = conn.execute(st)
+			for row in result:
+				display.append(row)
+
+			result.close()
+
+	return render_template('index.html', form1 = form1, form2 = form2, display = display)
+
+@app.route('/get_mi_by_ci', methods = ['GET', 'POST'])
+def get_mi_by_ci():
+
+	form = GetMIByCI()
+	display = []
+	if('customers' in request.form):
+		customer_id = request.form['customers']
+		session['customer_id'] = customer_id
+		st = select(
+			[machines]
+		).where(machines.c.customer_id == customer_id)
+
+		result = conn.execute(st)
+		for row in result:
+			display.append(row)
+
+		result.close()
+
+	elif('submit' in request.form):
+		if(request.form['submit'] == 'submit'):
+			try:
+				machine_id = request.form['machines']
+				session['machine_id'] = machine_id
 				return redirect(url_for('call_log'))
-			
-		elif('register' in request.form):
-			return redirect(url_for('register'))
+			except KeyError as k:
+				flash('Please select a machine')
 
-	#flash('Enter correct machine serial number')
-	return render_template('index.html', form=form)
+		elif(request.form['submit'] == 'Add Machine'):
+			return redirect(url_for('add_machine'))
 
-@app.route('/insert_service', methods = ['GET', 'POST'])
-def insert_service():
-	#print(session)
-	if('msn' in session):
-		msn = session['msn']
-		#print(msn,'this is insert page')
-		#print(mrc['services'])
-		form = InsertService()
-		#print('insert ki ocham')
-		mrc = mongo.db.MRCObject.find_one({"msn": msn})
-		services = mongo.db.ServiceObject.find({"_id": { "$in" : mrc['services'] } })
-		print('HI')
-		if(form.validate_on_submit()):
-			#session.pop('msn',None)
-			id = objectid.ObjectId()
-			challan = form.challan.data
-			prev_mtr_rdng = form.prev_mtr_rdng.data
-			present_mtr_rdng = form.present_mtr_rdng.data
-			qty = form.qty.data
-			yeild = form.yeild.data
-			exec_name = form.exec_name.data
-			remarks = form.remarks.data
-			row = {"_id": id, "challan": challan, "prev_mtr_rdng": prev_mtr_rdng,
-			"present_mtr_rdng": present_mtr_rdng, "qty": qty,
-			 "yield": yeild, "exec_name": exec_name, "remarks": remarks}
-			print('inserted')
-			x = mongo.db.ServiceObject.insert_one(row)
-			#print(x, 'hey hi')
-			mongo.db.MRCObject.update({"msn": msn}, { "$addToSet" : { "services": id } })
-			#flash('Row added succesfully')
-			services = mongo.db.ServiceObject.find({"_id": { "$in" : mrc['services'] } })
-			return redirect(url_for('insert_service'))
-		return render_template('insert_service.html', form=form, title = "InsertService", services=services)
-	else:
-		return render_template('error_page.html')
+	return render_template('get_mi_by_ci.html', form = form, display = display)
 
-@app.route('/register', methods = ['GET', 'POST'])
-def register():
-	form = RegisterForm()
+
+@app.route('/add_machine', methods = ['GET', 'POST'])
+def add_machine():
+
+	form = AddMachine()
 	if(form.validate_on_submit()):
-		customer_name = form.customer.data
-		machine_serial_number = form.msn.data
-		address = form.address.data
-		phone = form.phn.data
-		make_model = form.make_model.data
-		instal_date = form.install_date.data
-		per_copy_charges = form.per_copy_charges.data
-		services = []
+		try:
+			print('entered')
+			customer_id = session['customer_id']
+			session.pop('customer_id')
+			machine_id = form.machine_id.data
+			make = form.make.data
+			model = form.model.data
+			from_date = form.from_date.data
+			to_date = form.from_date.data
+			type_of_contract = form.type_of_contract.data
+			amcv = form.amcv.data
+			warranty = form.warranty.data
+			initial_meter = form.initial_meter.data
+			free_copies = form.free_copies.data
+			per_copy_charges = form.per_copy_charges.data
+			ins = machines.insert().values(machine_id = machine_id, customer_id = customer_id, 
+			make = make,model = model, from_date = from_date, type_of_contract = type_of_contract,
+			amcv = amcv, to_date = to_date, warranty = warranty,free_copies = free_copies,
+			initial_meter = initial_meter, per_copy_charges = per_copy_charges)
+			
+			try:
+				result = conn.execute(ins)
+			except:
+				print('There is exception')
 
-		insert_row = {"msn": machine_serial_number, "customer": customer_name, "address": address, "phn": phone, 
-						"make_model": make_model, "install_date": instal_date, "per_copy_charges": per_copy_charges, "services": services}
+		except KeyError as k:
 
-		x = mongo.db.MRCObject.insert_one(insert_row)
-		flash('Entered succesfully')
-		return redirect(url_for('register'))
+			flash('Please select a customer')
+			
+	return render_template('add_machine.html', form = form)
 
-	return render_template('register_form.html', form = form, title = "RegisterForm")
+
+@app.route('/add_customer', methods = ['GET', 'POST'])
+def add_customer():
+
+	form = AddCustomer()
+	if(form.validate_on_submit()):
+
+		customer1 = form.customer1.data
+		customer2 = form.customer2.data
+		company1 = form.company1.data
+		company2 = form.company2.data
+		phone_no = form.phone_no.data
+		landline = form.landline.data
+		email = form.email.data
+		ins = customers.insert().values(company1 = company1, company2 = company2, customer1 = customer1,
+			customer2 = customer2, phone_no = phone_no, landline = landline, email = email)
+		try:
+			result = conn.execute(ins)
+		except Exception as e:
+			flash('Customer not inserted')
+
+	return render_template('add_customer.html', form=form)
 
 @app.route('/calllog', methods = ['GET', 'POST'])
 def calllog():
