@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from forms import GetMI, GetCI, GetMIByCI, AddMachine
+from forms import GetMI, GetCI, GetMIByCI, AddMachine, CallLogForm
 import psycopg2
 import sqlalchemy as db
 from sqlalchemy import *
@@ -9,14 +9,16 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'f5a117a3ab54a2f5476857b652a0c8a6'
 
-conn_string = 'postgresql+psycopg2://postgres:aditya123@localhost/excel'
-
+conn_string = 'postgresql+psycopg2://postgres:kamesh11@localhost/excel'
 engine = db.create_engine(conn_string)
 conn = engine.connect()
 meta = MetaData()
 
+engineers = db.Table('engineers', meta, autoload = True, autoload_with = engine)
+services = db.Table('services', meta, autoload = True, autoload_with = engine)
 customers = db.Table('customers', meta, autoload = True, autoload_with = engine)
 machines = db.Table('machines', meta, autoload = True, autoload_with = engine)
+call_log = db.Table('call_log', meta, autoload =True, autoload_with = engine)
 
 @app.route('/', methods = ['GET', 'POST'])
 def index():
@@ -136,53 +138,60 @@ def add_customer():
 
 	form = AddCustomer()
 	if(form.validate_on_submit()):
+		customer_name = form.customer.data
+		machine_serial_number = form.msn.data
+		address = form.address.data
+		phone = form.phn.data
+		make_model = form.make_model.data
+		instal_date = form.install_date.data
+		per_copy_charges = form.per_copy_charges.data
+		services = []
 
-		customer1 = form.customer1.data
-		customer2 = form.customer2.data
-		company1 = form.company1.data
-		company2 = form.company2.data
-		phone_no = form.phone_no.data
-		landline = form.landline.data
-		email = form.email.data
-		ins = customers.insert().values(company1 = company1, company2 = company2, customer1 = customer1,
-			customer2 = customer2, phone_no = phone_no, landline = landline, email = email)
-		try:
-			result = conn.execute(ins)
-		except Exception as e:
-			flash('Customer not inserted')
+		insert_row = {"msn": machine_serial_number, "customer": customer_name, "address": address, "phn": phone, 
+						"make_model": make_model, "install_date": instal_date, "per_copy_charges": per_copy_charges, "services": services}
 
-	return render_template('add_customer.html', form=form)
+		x = mongo.db.MRCObject.insert_one(insert_row)
+		flash('Entered succesfully')
+		return redirect(url_for('register'))
+
+	return render_template('register_form.html', form = form, title = "RegisterForm")
 
 @app.route('/calllog', methods = ['GET', 'POST'])
 def calllog():
-	form = CallLogForm()
-	mid = '103'
+	try:
+		m_id = '103'
+		#m_id = request.form['machines']
+		form = CallLogForm()
 
-	sel = select(
-		[call_log.c.call_date, customers.c.customer1, call_log.c.engineer_id, 
-			engineers.c.engineer_name, call_log.c.present_mtr_rdg,
-				services.c.docket_no]
-	)
-
-	st = sel.where(
-		and_(
-			call_log.c.machine_id == mid,
-			call_log.c.engineer_id == engineers.c.engineer_id,
-			call_log.c.customer_id == customers.c.customer_id,
-			call_log.c.call_id == services.c.call_id
+		sel = select(
+			[call_log.c.call_date, customers.c.customer1, call_log.c.engineer_id, 
+				engineers.c.engineer_name, call_log.c.present_mtr_rdg,
+					services.c.docket_no]
 		)
-	)
 
-	result = conn.execute(st)
-	display = []
-	for row in result:
-		display.append(row)
+		st = sel.where(
+			and_(
+				call_log.c.machine_id == m_id,
+				call_log.c.engineer_id == engineers.c.engineer_id,
+				call_log.c.customer_id == customers.c.customer_id,
+				call_log.c.call_id == services.c.call_id
+			)
+		)
 
-	print(display)
-	print(len(display))
-	print(display[-3:])
+		result = conn.execute(st)
+		display = []
+		for row in result:
+			display.append(row)
 
-	return render_template('call_log.html', form = form, result = result)
+		print(display)
+		print(len(display))
+		print(display[-3:])
+		res = display[-3:]
+
+	except KeyError as e:
+		flash('Home page ki dobbey')
+		
+	return render_template('call_log.html', form = form, res = res)
 
 if(__name__ == '__main__'):
 	app.run(debug=True)

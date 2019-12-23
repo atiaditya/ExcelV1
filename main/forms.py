@@ -42,6 +42,7 @@ class AddCustomer(FlaskForm):
 	landline = StringField('Landline')
 	email = StringField('Email')
 	submit = SubmitField('Submit')
+
 class AddService(FlaskForm):
 	docket_no = IntegerField('Docket no', validators = [InputRequired()])
 	challan = StringField('Challan', validators = [InputRequired()])
@@ -55,3 +56,15 @@ class AddService(FlaskForm):
 	symptom = StringField('Symptom', validators = [InputRequired()])
 	cause = StringField('Cause', validators = [InputRequired()])
 	action = StringField('Action', validators = [InputRequired()])
+
+class CallLogForm(FlaskForm):
+	customer_name = StringField('Customer Name', validators = [InputRequired()])
+	phone_no = StringField('Phone Number', validators = [InputRequired()])
+	call_type = StringField('Call Type', validators = [InputRequired()])
+	#model_no = StringField('Model Number', validators = [InputRequired()])
+	call_reason = StringField('Call Reason', validators = [InputRequired()])
+	present_mtr_rdg = StringField('Meter Reading', validators = [InputRequired()])
+	call_time = TimeField('Call Time', format = '%Y-%m-%d')
+	engineer_name = StringField('Engineer Name', validators = [InputRequired()])
+	remarks = TextAreaField('Remarks')
+	submit = SubmitField('Submit')
