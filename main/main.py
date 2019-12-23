@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'f5a117a3ab54a2f5476857b652a0c8a6'
 
-conn_string = 'postgresql+psycopg2://postgres:kamesh11@localhost/excel'
+conn_string = 'postgresql+psycopg2://postgres:aditya123@localhost/excel'
 engine = db.create_engine(conn_string)
 conn = engine.connect()
 meta = MetaData()
@@ -86,7 +86,7 @@ def get_mi_by_ci():
 			try:
 				machine_id = request.form['machines']
 				session['machine_id'] = machine_id
-				return redirect(url_for('call_log'))
+				return redirect(url_for('calllog'))
 			except KeyError as k:
 				flash('Please select a machine')
 
@@ -159,8 +159,7 @@ def add_customer():
 @app.route('/calllog', methods = ['GET', 'POST'])
 def calllog():
 	try:
-		m_id = '103'
-		#m_id = request.form['machines']
+		machine_id = session['machine_id']
 		form = CallLogForm()
 
 		sel = select(
