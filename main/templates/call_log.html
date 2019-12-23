@@ -35,7 +35,7 @@
 				</td>
 				<td>
 					{{ form.call_time.label(class="myLabel") }}
-					{{ form.call_time(style="margin-left: 132px") }}
+					{{ form.call_time(style="margin-left: 152px") }}
 				</td>
 			</tr>
 			
@@ -55,7 +55,7 @@
 		{{ form.submit(class="gButton") }}
 	</p>
 
-	<table class = "blueTable", style= 'float:left; padding: 20 20 20 20; margin: 20 20 20 20'>
+	<table align="center" class = "blueTable">
 		<thead>
 			<tr>
 				<th>Date</th>
@@ -76,18 +76,18 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for doc in result %}
+			{% for doc in res %}
 			<tr class = "{{ loop.cycle('odd', 'even') }}">
 				
 				<td>
-					{% if doc['date'] %}
-					{{ doc['date'] }}
+					{% if doc['call_date'] %}
+					{{ doc['call_date'] }}
 					{%  endif %}
 				</td>
 
 				<td>
-					{% if doc['name'] %}
-					{{ doc['name'] }}
+					{% if doc['customer1'] %}
+					{{ doc['customer1'] }}
 					{%  endif %}
 				</td>
 
@@ -109,17 +109,29 @@
 					{%  endif %}
 				</td>
 
-				<td>
-					{% if doc['toner_supply_date'] %}
-					{{ doc['toner_supply_date'] }}
-					{%  endif %}
-				</td>
+				<td></td>
+
+				<td>Y</td>
+
+				<td>Y</td>
+
+				<td></td>
+
+				<td></td>
 
 				<td>
 					{% if doc['docket_no'] %}
 					{{ doc['docket_no'] }}
 					{%  endif %}
 				</td>
+
+				<td>Y</td>
+
+				<td></td>
+
+				<td></td>
+
+				<td></td>
 		
 			</tr>
 			{% endfor %}

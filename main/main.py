@@ -101,34 +101,42 @@ def register():
 
 @app.route('/calllog', methods = ['GET', 'POST'])
 def calllog():
-	form = CallLogForm()
-	mid = '103'
+	try:
+		m_id = '103'
+		#m_id = request.form['machines']
+		form = CallLogForm()
 
-	sel = select(
-		[call_log.c.call_date, customers.c.customer1, call_log.c.engineer_id, 
-			engineers.c.engineer_name, call_log.c.present_mtr_rdg,
-				services.c.docket_no]
-	)
-
-	st = sel.where(
-		and_(
-			call_log.c.machine_id == mid,
-			call_log.c.engineer_id == engineers.c.engineer_id,
-			call_log.c.customer_id == customers.c.customer_id,
-			call_log.c.call_id == services.c.call_id
+		sel = select(
+			[call_log.c.call_date, customers.c.customer1, call_log.c.engineer_id, 
+				engineers.c.engineer_name, call_log.c.present_mtr_rdg,
+					services.c.docket_no]
 		)
-	)
 
-	result = conn.execute(st)
-	display = []
-	for row in result:
-		display.append(row)
+		st = sel.where(
+			and_(
+				call_log.c.machine_id == m_id,
+				call_log.c.engineer_id == engineers.c.engineer_id,
+				call_log.c.customer_id == customers.c.customer_id,
+				call_log.c.call_id == services.c.call_id
+			)
+		)
 
-	print(display)
-	print(len(display))
-	print(display[-3:])
+		result = conn.execute(st)
+		display = []
+		for row in result:
+			display.append(row)
 
-	return render_template('call_log.html', form = form, result = result)
+		print(display)
+		print(len(display))
+		print(display[-3:])
+		res = display[-3:]
+
+		return render_template('call_log.html', form = form, res = res)
+
+	except KeyError as e:
+		flash('Home page ki dobbey')
+	return 'OK'
+
 
 if(__name__ == '__main__'):
 	app.run(debug=True)
