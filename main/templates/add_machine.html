@@ -12,34 +12,6 @@
         	{{ form.hidden_tag() }}
         	<br>
         	<br>
-        	{{ form.options }}
-        	{{ form.search_by_field }}
-        	{{ form.submit(formnovalidate = 'formnovalidate') }}
-        	<h2>Select the customer: </h2>
-            <table>
-                <tr>
-                    <th>Customer Id</th>
-                    <th>Company1</th>
-                    <th>Company2</th>
-                    <th>Customer1</th>
-                    <th>Customer2</th>
-                    <th>Phone no</th>
-                    <th>Email</th>
-                </tr>
-                {% for row in display %}
-                    <tr>
-                        <td>{{row[0]}}</td>
-                        <td>{{row[1]}}</td>
-                        <td>{{row[2]}}</td>
-                        <td>{{row[3]}}</td>
-                        <td>{{row[4]}}</td>
-                        <td>{{row[5]}}</td>
-                        <td>{{row[7]}}</td>
-                        <td><input type = "radio" name = "customers" value = {{row[0]}}></td>
-                    </tr>
-                {% endfor %}
-            </table>
-            <br>
             {{ form.machine_id.label }}
             {{ form.machine_id }}
             <br>
