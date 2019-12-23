@@ -6,7 +6,7 @@ import sqlalchemy as db
 from sqlalchemy import *
 from sqlalchemy.sql import select, and_, or_, not_
 
-app = Flask(__name__)
+'''app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'f5a117a3ab54a2f5476857b652a0c8a6'
 
@@ -97,7 +97,7 @@ def register():
 		flash('Entered succesfully')
 		return redirect(url_for('register'))
 
-	return render_template('register_form.html', form = form, title = "RegisterForm")
+	return render_template('register_form.html', form = form, title = "RegisterForm")'''
 
 @app.route('/calllog', methods = ['GET', 'POST'])
 def calllog():

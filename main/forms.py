@@ -3,7 +3,7 @@ from wtforms import StringField, SubmitField, TextAreaField, DateTimeField
 from wtforms.validators import InputRequired, Length
 from wtforms.fields.html5 import DateTimeField, DateField, TimeField
 
-class MachineForm(FlaskForm):
+'''class MachineForm(FlaskForm):
 	machine_serial_number= StringField('Machine Serial no', validators = [InputRequired(), Length(min=5,max=20)])
 	register = SubmitField('Register')
 	enter = SubmitField('Enter')
@@ -26,7 +26,7 @@ class RegisterForm(FlaskForm):
 	make_model = StringField('Make And Model', validators = [InputRequired()])
 	install_date = StringField('Install Date', validators = [InputRequired()])
 	per_copy_charges = StringField('Per Copy Charges', validators = [InputRequired()])
-	submit = SubmitField('Submit')
+	submit = SubmitField('Submit')'''
 
 class CallLogForm(FlaskForm):
 	customer_name = StringField('Customer Name', validators = [InputRequired()])
