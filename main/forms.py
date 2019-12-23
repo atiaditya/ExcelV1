@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, DateTimeField
 from wtforms.validators import InputRequired, Length
+from wtforms.fields.html5 import DateTimeField, DateField, TimeField
 
 class MachineForm(FlaskForm):
 	machine_serial_number= StringField('Machine Serial no', validators = [InputRequired(), Length(min=5,max=20)])
@@ -31,9 +32,10 @@ class CallLogForm(FlaskForm):
 	customer_name = StringField('Customer Name', validators = [InputRequired()])
 	phone_no = StringField('Phone Number', validators = [InputRequired()])
 	call_type = StringField('Call Type', validators = [InputRequired()])
-	model_no = StringField('Model Number', validators = [InputRequired()])
+	#model_no = StringField('Model Number', validators = [InputRequired()])
 	call_reason = StringField('Call Reason', validators = [InputRequired()])
-	mtr_rdng = StringField('Meter Reading', validators = [InputRequired()])
-	call_time = StringField('Call Time', validators = [InputRequired()])
+	present_mtr_rdg = StringField('Meter Reading', validators = [InputRequired()])
+	call_time = TimeField('Call Time', format = '%Y-%m-%d')
 	engineer_name = StringField('Engineer Name', validators = [InputRequired()])
-	remarks = StringField('Remarks')
+	remarks = TextAreaField('Remarks')
+	submit = SubmitField('Submit')

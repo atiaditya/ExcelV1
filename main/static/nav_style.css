@@ -1,21 +1,44 @@
+.gButton {
+    color: #444444;
+    background: #F3F3F3;
+    border: 1px #DADADA solid;
+    padding: 5px 10px;
+    border-radius: 2px;
+    font-weight: bold;
+    font-size: 13pt;
+    outline: none;
+}
 
+.gButton:hover {
+    border: 1px #C6C6C6 solid;
+    box-shadow: 1px 1px 1px #EAEAEA;
+    color: #333333;
+    background: #F7F7F7;
+}
+
+table{
+  width: 75%;
+}
 
 .myLabel {
-  text-align: right;
-  margin-right: 20px;
-  margin-left: 600px;
-  width: 100px;
+  font-size: 17px;
+  font-family: Verdana, Arial, Helvetica;
   float: left;
-  font-size: 15px;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+textarea{
+  float: right;
+  width: 60%;
+  height: 100px;
 }
 
 input[type=text] {
-  width: 20%;
+  width: 60%;
   height: 30px;
   box-sizing: border-box;
   padding: 7px 10px;
   margin: 7px 0;
+  float: right;
 }
 
 input[type=text]:focus {

@@ -22,10 +22,11 @@
                 <!--<button onclick="window.location.href = 'http://127.0.0.1:5000/profile';" class="btn btn-white btn-animated">Record</button>-->
 		<form method = "POST", action = "/">
 			{{ form.hidden_tag() }}
-            <div>
+            
     			{{ form.machine_serial_number.label(style='font-size:18px;color: white;font-family: "Lato", sans-serif;letter-spacing: 2px;') }}<br>
+
     			{{ form.machine_serial_number }}
-            </div>
+           
             <br>
             <div style='margin-left: 50px'>
 			     {{ form.register(class= 'btn btn-animated', style = 'margin-right:16px') }}

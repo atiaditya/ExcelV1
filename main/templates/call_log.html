@@ -1,37 +1,130 @@
 {% extends "base.html" %}
 {% block content %}
 	<div><h1><center>Call Log</center></h1><div>
-	<div>
+	<table align="center" cellpadding="10" cellspacing="10">
 		<form method="POST">
 			{{ form.hidden_tag() }}
-			<br>
-			{{ form.customer_name.label(class="myLabel") }}
-			{{ form.customer_name }}
-			<br><br>
-			{{ form.phone_no.label(class="myLabel") }}
-			{{ form.phone_no }}
-			<br><br>
-			{{ form.call_type.label(class="myLabel") }}
-			{{ form.call_type }}
-			<br><br>
-			{{ form.model_no.label(class="myLabel") }}
-			{{ form.model_no }}
-			<br><br>
-			{{ form.call_reason.label(class="myLabel") }}
-			{{ form.call_reason }}
-			<br><br>
-			{{ form.mtr_rdng.label(class="myLabel") }}
-			{{ form.mtr_rdng }}
-			<br><br>
-			{{ form.call_time.label(class="myLabel") }}
-			{{ form.call_time }}
-			<br><br>
-			{{ form.engineer_name.label(class="myLabel") }}
-			{{ form.engineer_name }}
-			<br><br>
-			{{ form.remarks.label(class="myLabel") }}
-			{{ form.remarks }}
-			<br><br>
+
+			<tr>
+				<td>
+					{{ form.customer_name.label(class="myLabel") }}
+					{{ form.customer_name }}
+				</td>
+
+				<td>
+					{{ form.phone_no.label(class="myLabel") }}
+					{{ form.phone_no }}
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					{{ form.call_type.label(class="myLabel") }}
+					{{ form.call_type }}
+				</td>
+				<td>
+					{{ form.call_reason.label(class="myLabel") }}
+					{{ form.call_reason }}
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					{{ form.present_mtr_rdg.label(class="myLabel") }}
+					{{ form.present_mtr_rdg }}
+				</td>
+				<td>
+					{{ form.call_time.label(class="myLabel") }}
+					{{ form.call_time(style="margin-left: 132px") }}
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					{{ form.engineer_name.label(class="myLabel") }}
+					{{ form.engineer_name }}
+				</td>
+				<td>
+					{{ form.remarks.label(class="myLabel") }}
+					{{ form.remarks }}
+				</td>
+			</tr>
 		</form>
-	</div>
+	</table>
+	<p align="center">
+		{{ form.submit(class="gButton") }}
+	</p>
+
+	<table class = "blueTable", style= 'float:left; padding: 20 20 20 20; margin: 20 20 20 20'>
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Name</th>
+				<th>Engr. No.</th>
+				<th>Engr. Name</th>
+				<th>Meter Reading</th>
+				<th>Toner Supply Date</th>
+				<th>Drum</th>
+				<th>Developer</th>
+				<th>DBC</th>
+				<th>CBC</th>
+				<th>Doc. No.</th>
+				<th>SCN Received</th>
+				<th>Toner Yield</th>
+				<th>Drum Yield</th>
+				<th>Developer Yield</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for doc in result %}
+			<tr class = "{{ loop.cycle('odd', 'even') }}">
+				
+				<td>
+					{% if doc['date'] %}
+					{{ doc['date'] }}
+					{%  endif %}
+				</td>
+
+				<td>
+					{% if doc['name'] %}
+					{{ doc['name'] }}
+					{%  endif %}
+				</td>
+
+				<td>
+					{% if doc['engineer_id'] %}
+					{{ doc['engineer_id'] }}
+					{%  endif %}
+				</td>
+
+				<td>
+					{% if doc['engineer_name'] %}
+					{{ doc['engineer_name'] }}
+					{%  endif %}
+				</td>
+
+				<td>
+					{% if doc['present_mtr_rdg'] %}
+					{{ doc['present_mtr_rdg'] }}
+					{%  endif %}
+				</td>
+
+				<td>
+					{% if doc['toner_supply_date'] %}
+					{{ doc['toner_supply_date'] }}
+					{%  endif %}
+				</td>
+
+				<td>
+					{% if doc['docket_no'] %}
+					{{ doc['docket_no'] }}
+					{%  endif %}
+				</td>
+		
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+
 {% endblock content %}

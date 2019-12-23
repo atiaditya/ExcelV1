@@ -106,7 +106,7 @@ CREATE TABLE parts(
     machine_id VARCHAR(30) REFERENCES machines(machine_id),
     part_id serial PRIMARY KEY,
     part_name VARCHAR(20) NOT NULL,
-    life INTEGER NOT NULL,
+    life INTEGER NOT NULL, 
     cost FLOAT(10) NOT NULL
 );
 
