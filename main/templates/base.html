@@ -2,7 +2,6 @@
 	<head>
 		<link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
 		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='nav_style.css') }}">
-		
 		{% if title %}
 			<title>{{ title }} page</title>
 		{% else %}
@@ -10,7 +9,7 @@
 		{% endif %}
 	
 	</head>
-	<body style='background:url("{{ url_for("static",filename="formbg.jpg") }}");'>
+	<body>
 		<nav>
 			<a href="index">HOME</a>
 			<a href="insert_service">MRC</a>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
     <head>
         <title>Excel Technologies</title>
+        <link rel="stylesheet" href="../static/style.css" type = "text/css">
         <script>
             function register(){
                 window.location = 'http://localhost:5000/add_customer'
@@ -12,49 +12,80 @@
     </head>
 
     <body>
-        <input type="submit" value="Register" onclick="register()">
-        <form method = "POST" action = "#" id = "form1">
-            {{ form1.hidden_tag() }}
-            {{ form1.machine_id.label }}
-            {{ form1.machine_id }}
-            {{ form1.login_by_mi }}
-            {{ form1.submit }}
-        </form>
-
-		<form method = "POST" action = "/get_mi_by_ci" id = "form2">
-			{{ form2.hidden_tag() }}
-            {{ form2.options }}
-            {{ form2.search_by_field }}
-            {{ form2.submit(formaction = "#") }}
-            <h2>Select the customer: </h2>
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Customer1</th>
-                    <th>Customer2</th>
-                    <th>Company1</th>
-                    <th>Company2</th>
-                    <th>Phone no</th>
-                    <th>Landline</th>
-                    <th>Email</th>
-                    <th>Select</th>
-                </tr>
-                {% for row in display %}
-                    <tr>
-                        <td>{{row[0]}}</td>
-                        <td>{{row[3]}}</td>
-                        <td>{{row[4]}}</td>
-                        <td>{{row[1]}}</td>
-                        <td>{{row[2]}}</td>
-                        <td>{{row[5]}}</td>
-                        <td>{{row[6]}}</td>
-                        <td>{{row[7]}}</td>
-                        <td><input type = "radio" name = "customers" value = {{row[0]}}></td>
-                    </tr>
-                {% endfor %}
-            </table>
-            <input type = "submit" name = "submit" value = "submit">
-		</form>
+        <header class="header">
+            <h1 class="excel">Excel Technologies</h1>
+            <div style="position:relative">
+            <div class="text-box">
+                New Customer? ---> <input type="submit" value="Register" onclick="register()">
+            </div>
+                <div class="text-box">
+                <form method = "POST" action = "#" id = "form1" style="padding: 20 20 20 20;margin: 20 20 20 20; border: 20 20 20 20">
+                    {{ form1.hidden_tag() }}
+                    {{ form1.machine_id.label }}
+                    -
+                    {{ form1.machine_id }}
+                    {{ form1.login_by_mi }}
+                    =>
+                    {{ form1.submit }}
+                
+                </form>
+                </div>
+            <div class="text-box">
+		    <form method = "POST" action = "/get_mi_by_ci" id = "form2">
+			    {{ form2.hidden_tag() }}
+                {{ form2.options }}
+                :
+                {{ form2.search_by_field }}
+                =>
+                {{ form2.submit(formaction="#") }}
+                <br><br>
+                {%if not display%}
+                    <script>
+                        document.getElementById('show').style.display="none";
+                    </script>
+                {% else %}
+                    <div id ='show'>
+                    <h4>Select the customer: </h4>
+                    <br>
+                    <center>
+                    <table>
+                        <tr>
+                            <th>ID</th>
+                            <th>Customer1</th>
+                            <th>Customer2</th>
+                            <th>Company1</th>
+                            <th>Company2</th>
+                            <th>Phone no</th>
+                            <th>Landline</th>
+                            <th>Email</th>
+                            <th>Select</th>
+                        </tr>
+                            {% for row in display %}
+                                <tr>
+                                    <td>{{row[0]}}</td>
+                                    <td>{{row[3]}}</td>
+                                    <td>{{row[4]}}</td>
+                                    <td>{{row[1]}}</td>
+                                    <td>{{row[2]}}</td>
+                                    <td>{{row[5]}}</td>
+                                    <td>{{row[6]}}</td>
+                                    <td>{{row[7]}}</td>
+                                    <td><input type = "radio" name = "customers" value = {{row[0]}}></td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </table>
+                </div>
+                <center>
+                <div class="btn">
+                <input type = "submit" name = "submit" value = "submit">
+                </div>
+            </center>
+                </center>
+            </form>
+            </div>
+            </div>
+        </header>
     </body>
 
 </html>

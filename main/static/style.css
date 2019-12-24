@@ -22,194 +22,33 @@ body{
 
 .excel{
     top:0px;
-    font-size: 20px;
+    font-size: 30px;
     text-align: center;
-    font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace; 
-    color: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
+    color: black;
     animation-name: moveInRight;
     animation-duration: 4s;
-    font-weight: 300;
+    font-weight: 500;
 }
 
 .header{
-    height: 100vh;
-    background-image:linear-gradient(to right bottom,
-    rgba(4, 20, 1, 0.801),
-    rgba(3, 53, 35, 0.801)),
-    url(wall.jpg);
+    /*background-image : url(formbg.jpg);*/
     background-size: cover;
     background-position: top;
-    clip-path: polygon(0 0,100% 0,100% 85vh,0 100%);
+    
 }
 
 .text-box{
-    position: absolute;
-    top: 40%;
+
+    margin-top: 50px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    /*transform: translate(-50%, -50%);*/
     text-align: center;
 }
 
-
-.heading-primary{
-    color:#ffffff;
-    text-transform: uppercase;
-    margin-bottom: 90px;
-}
-
-.heading-primary-main{
-    display: block;
-    font-size: 40px;
-    font-weight: 400;
-    letter-spacing: 15px;
-    animation-name: moveInLeft;
-    animation-duration: 1s;
-}
-
-.heading-primary-sub{
-    display: block;
-    font-size: 18px;
-    font-weight: 299;
-    letter-spacing: 12.5px;
-    overflow: hidden;
-    border-right: .15em solid rgba(255, 255, 255, 0.719);
-    white-space: nowrap;
-    margin: 0 auto;
-    /*--animation-name: moveInRight;
-    animation-duration: 1s;*/
-    animation: 
-      typing 3.5s steps(30,end),
-      blink-caret .5s step-end infinite;
-
-}
-
-@keyframes moveInLeft{
-    0%{
-        opacity: 0;
-        transform: translateX(-100px);
-    }
-
-    80%{
-        transform: translateX(20px);
-    }
-    100%{
-        opacity: 1;
-        transform: translate(0);
-    }
-}
-
-@keyframes moveInRight{
-    0%{
-        opacity: 0;
-        transform: translateX(100px);
-    }
-
-    80%{
-        transform: translateX(-20px);
-    }
-    100%{
-        opacity: 1;
-        transform: translate(0);
-    }
-}
-
-.btn{
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 10px 25px;
-    display: inline-block;
-    border-radius: 100px;
-    transition: all .2s;
-    position: relative;
-    letter-spacing: 2px;
-
-}
-
-.btn:hover{
-    transform: translateY(-3px);
-    box-shadow: x-axis y-axis blur rgba;
-    box-shadow: 0 10px 20px rgba(0,0,0,.3);
-}
-
-/*.btn:active{
-    transform: translateY(-1px);
-    box-shadow: 0 5px 10px rgba(0,0,0,.3);
-}*/
-
-.btn-white{
-    background-color: #fff;
-    color: #777;
-}
-
-.btn::after{
-    content: "";
-    display: inline-block;
-    height: 100%;
-    width: 100%;
-    border-radius: 100px;
-    text-decoration: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    transition: all .4s;
-}
-
-.btn-white::after{
-    background-color: #fff;
-}
-
-.btn:hover::after{
-    transform: scaleX(1.5) scaleY(1.2);
-    opacity: 0;
-}
-
-.btn-animated{
-    animation-name: moveInBottom;
-    animation-duration: 1s;
-    animation-delay: .5s;
-    animation-fill-mode: backwards;
-}
-
-@keyframes moveInBottom{
-    0%{
-        opacity: 0;
-        transform: translateY(200px);
-    }
-    75%{
-        transform: translateY(-10px);
-    }
-    100%{
-        opacity: 1;
-        transform: translate(0);
-    }
-}
-
-/*.menu{
-    float: right;
-    background-color: white;
-    height: 40px;
-    width: 40px;
-    margin-top: 30px;
-    border-radius: 100px;
-    margin-right: 20px;
-}*/
-  
-/* The typing effect */
-@keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
-}
-
-/* The typewriter cursor effect */
-@keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: rgba(255, 255, 255, 0.26) }
-  }
-  
-  
-form{
-
-    top:400px;
+.text-box2{
     
+    margin-top:70px;
+    left: 50%;
+    text-align: center;
 }

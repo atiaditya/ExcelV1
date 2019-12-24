@@ -105,8 +105,8 @@ def add_machine():
 	if(form.validate_on_submit()):
 		try:
 			print('entered')
-			customer_id = session['customer_id']
-			session.pop('customer_id')
+			customer_id = 1
+			#session.pop('customer_id')
 			machine_id = form.machine_id.data
 			make = form.make.data
 			model = form.model.data
@@ -125,11 +125,12 @@ def add_machine():
 			
 			try:
 				result = conn.execute(ins)
-			except:
+			except Exception as k:
+				print(k)
 				print('There is exception')
 
 		except KeyError as k:
-
+			print(k)
 			flash('Please select a customer')
 			
 	return render_template('add_machine.html', form = form)
@@ -197,11 +198,31 @@ def call_log():
 @app.route('/add_customer',methods=['GET','POST'])
 def add_customer():
 	form = AddCustomer()
+
+	if(form.validate_on_submit()):
+
+		customer1 = form.customer1.data
+		customer2 = form.customer2.data
+		company1 = form.company1.data
+		company2 = form.company2.data
+		phn = form.phn.data
+		landline = form.landline.data
+		email = form.email.data
+		print(customer1)
+		ins = customers.insert().values(company1 = company1, company2 = company2, customer1 = customer1,
+			customer2 = customer2, phone_no = phn, landline = landline, email = email)
+		try:
+			result = conn.execute(ins)
+		except Exception as e:
+			flash('Customer not inserted')
+
 	return render_template('add_customer.html',form =form)
 
 @app.route('/scn',methods = ['GET','POST'])
 def scn():
 	form = ScnForm()
+
+	#na db dhobbatle :||
 	return render_template('scn_form.html',form = form)
 
 if(__name__ == '__main__'):
