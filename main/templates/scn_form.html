@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+	<form method="POST" style= 'float: left;padding: 20 20 20 20;margin: 20 20 20 40; border: 20 20 20 20'>
+		<fieldset>
+		<legend style="font-size: 30px; font-weight: 300; font-family:Georgia, 'Times New Roman', Times, serif">Service Call Note</legend>
+		{{ form.hidden_tag() }}
+		<br>
+		<div style = "float:left;padding-right: 20px">
+			{{ form.time_dispatched.label }}
+			{{ form.time_dispatched }}
+			<br>
+		</div>
+
+		<div style = "float:left;padding-right: 20px">
+			{{ form.time_arrived.label }}
+			{{ form.time_arrived }}
+			<br>
+		</div>
+		<div style= "float:right">
+			{{ form.ccd.label }}
+			{{ form.ccd }}
+			<br>
+		</div>
+		<div style="clear:both;">&nbsp;</div>
+		<div style = "float:left;padding-right: 20px">
+			{{ form.symptom.label }}
+			{{ form.symptom }}
+			<br>
+		</div>
+
+		<div style = "float:left;padding-right: 20px">
+			{{ form.cause.label }}
+			{{ form.cause }}
+			<br>
+		</div>
+
+		<div style = "float: right">
+			{{ form.Action.label }}
+			{{ form.Action }}
+			<br>
+		</div>
+
+		
+		</fieldset>
+	</form>
+{% endblock content %}
+		

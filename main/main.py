@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from forms import GetMI, GetCI, GetMIByCI, AddMachine, CallLogForm
+from forms import GetMI, GetCI, GetMIByCI, AddMachine, CallLogForm, AddCustomer, ScnForm
 import psycopg2
 import sqlalchemy as db
 from sqlalchemy import *
@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'f5a117a3ab54a2f5476857b652a0c8a6'
 
-conn_string = 'postgresql+psycopg2://postgres:aditya123@localhost/excel'
+conn_string = 'postgresql+psycopg2://postgres:kiran@localhost/excel'
 engine = db.create_engine(conn_string)
 conn = engine.connect()
 meta = MetaData()
@@ -21,10 +21,12 @@ machines = db.Table('machines', meta, autoload = True, autoload_with = engine)
 call_log = db.Table('call_log', meta, autoload =True, autoload_with = engine)
 
 @app.route('/', methods = ['GET', 'POST'])
+@app.route('/index', methods = ['GET', 'POST'])
 def index():
 	form1 = GetMI()
 	form2 = GetCI()
 	display = []
+	
 	if(form1.validate_on_submit() and ('submit' in request.form)):
 
 		if(request.form['submit'] == 'login'):
@@ -117,9 +119,9 @@ def add_machine():
 			free_copies = form.free_copies.data
 			per_copy_charges = form.per_copy_charges.data
 			ins = machines.insert().values(machine_id = machine_id, customer_id = customer_id, 
-			make = make,model = model, from_date = from_date, type_of_contract = type_of_contract,
-			amcv = amcv, to_date = to_date, warranty = warranty,free_copies = free_copies,
-			initial_meter = initial_meter, per_copy_charges = per_copy_charges)
+				make = make,model = model, from_date = from_date, type_of_contract = type_of_contract,
+				amcv = amcv, to_date = to_date, warranty = warranty,free_copies = free_copies,
+				initial_meter = initial_meter, per_copy_charges = per_copy_charges)
 			
 			try:
 				result = conn.execute(ins)
@@ -133,7 +135,7 @@ def add_machine():
 	return render_template('add_machine.html', form = form)
 
 
-@app.route('/add_customer', methods = ['GET', 'POST'])
+'''@app.route('/add_customer', methods = ['GET', 'POST'])
 def add_customer():
 
 	form = AddCustomer()
@@ -155,11 +157,11 @@ def add_customer():
 		return redirect(url_for('register'))
 
 	return render_template('register_form.html', form = form, title = "RegisterForm")
-
-@app.route('/calllog', methods = ['GET', 'POST'])
-def calllog():
+'''
+@app.route('/call_log', methods = ['GET', 'POST'])
+def call_log():
 	try:
-		machine_id = session['machine_id']
+		m_id = session['machine_id']
 		form = CallLogForm()
 
 		sel = select(
@@ -191,6 +193,16 @@ def calllog():
 		flash('Home page ki dobbey')
 		
 	return render_template('call_log.html', form = form, res = res)
+
+@app.route('/add_customer',methods=['GET','POST'])
+def add_customer():
+	form = AddCustomer()
+	return render_template('add_customer.html',form =form)
+
+@app.route('/scn',methods = ['GET','POST'])
+def scn():
+	form = ScnForm()
+	return render_template('scn_form.html',form = form)
 
 if(__name__ == '__main__'):
 	app.run(debug=True)

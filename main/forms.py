@@ -38,7 +38,7 @@ class AddCustomer(FlaskForm):
 	company2 = StringField('Company2')
 	customer1 = StringField('Customer1', validators = [InputRequired()])
 	customer2 = StringField('Customer2')
-	phone_no = StringField('Phone no', validators = [InputRequired()])
+	phn = StringField('Phone no', validators = [InputRequired()])
 	landline = StringField('Landline')
 	email = StringField('Email')
 	submit = SubmitField('Submit')
@@ -68,3 +68,11 @@ class CallLogForm(FlaskForm):
 	engineer_name = StringField('Engineer Name', validators = [InputRequired()])
 	remarks = TextAreaField('Remarks')
 	submit = SubmitField('Submit')
+
+class ScnForm(FlaskForm):
+	time_dispatched = TimeField('Time Dispatched', validators = [InputRequired()])
+	time_arrived = TimeField('Time Arrived', validators = [InputRequired()])
+	ccd = DateField('CCD', validators = [InputRequired()])
+	symptom = StringField('Symptom', validators = [InputRequired()])
+	cause = StringField('Cause', validators = [InputRequired()])
+	Action = StringField('Action', validators = [InputRequired()])

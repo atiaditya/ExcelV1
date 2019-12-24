@@ -4,9 +4,15 @@
 
     <head>
         <title>Excel Technologies</title>
+        <script>
+            function register(){
+                window.location = 'http://localhost:5000/add_customer'
+            }
+        </script>
     </head>
 
     <body>
+        <input type="submit" value="Register" onclick="register()">
         <form method = "POST" action = "#" id = "form1">
             {{ form1.hidden_tag() }}
             {{ form1.machine_id.label }}

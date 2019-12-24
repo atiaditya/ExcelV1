@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <script>
+        function addMachine(){
+            window.location = 'http://localhost:5000/add_machine'
+        }
+    </script>
+	<form method="POST" style= 'float: left;padding: 20 20 20 20;margin: 20 20 20 40; border: 20 20 20 20'>
+		<fieldset>
+		<legend style="font-size: 30px; font-weight: 300; font-family:Georgia, 'Times New Roman', Times, serif">Register</legend>
+		{{ form.hidden_tag() }}
+		<br>
+		
+
+		
+		<div style="clear:both;">&nbsp;</div>
+		<div style = "float:left;padding-right: 20px">
+			{{ form.customer1.label }}
+			{{ form.customer1 }}
+			<br>
+		</div>
+
+		<div style = "float:left;padding-right: 20px">
+			{{ form.landline.label }}
+			{{ form.landline }}
+			<br>
+		</div>
+
+		
+		<div style="clear:both;">&nbsp;</div>
+		<div style = "float:left;padding-right: 20px">
+			{{ form.customer2.label }}
+			{{ form.customer2 }}
+			<br>
+		</div>
+
+		
+
+		<div style = "float: right">
+			{{ form.email.label }}
+			{{ form.email }}
+			<br>
+		</div>
+		<div style="clear:both;">&nbsp;</div>
+		<div style = "float:left;padding-right: 20px">
+			{{ form.company1.label }}
+			{{ form.company1 }}
+			<br>
+		</div>
+		<div style = "float:left;padding-right: 20px">
+			{{ form.phn.label }}
+			{{ form.phn }}
+			<br>
+		</div>
+
+		
+		<div style="clear:both;">&nbsp;</div>
+		<div style = "float:left;padding-right: 20px">
+			{{ form.company2.label }}
+			{{ form.company2 }}
+			<br>
+		</div>
+
+		
+		
+		
+		<div style="clear:both;">&nbsp;</div>
+		<div style="padding-top: 20px;">
+		<center>
+		{{ form.submit }}
+		</center>
+        </div>
+        
+        <div style="padding-top: 20px;">
+            <center>
+                <input type="submit" value="Add Machine" onclick="addMachine()">
+            </center>
+        </div>
+		</fieldset>
+	</form>
+{% endblock content %}
+		
