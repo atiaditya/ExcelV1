@@ -198,6 +198,7 @@ def call_log():
 @app.route('/add_customer',methods=['GET','POST'])
 def add_customer():
 	form = AddCustomer()
+<<<<<<< HEAD
 
 	if(form.validate_on_submit()):
 
@@ -216,13 +217,22 @@ def add_customer():
 		except Exception as e:
 			flash('Customer not inserted')
 
+=======
+	
+	#@aditya ikkada ninna manam chesina add_customer backend petti dhobbinchuko 
+>>>>>>> d41316ed22a5dc5664cbb66d8c7488039e311cba
 	return render_template('add_customer.html',form =form)
 
 @app.route('/scn',methods = ['GET','POST'])
 def scn():
 	form = ScnForm()
+<<<<<<< HEAD
 
 	#na db dhobbatle :||
+=======
+	
+	#na db dhobbatle
+>>>>>>> d41316ed22a5dc5664cbb66d8c7488039e311cba
 	return render_template('scn_form.html',form = form)
 
 if(__name__ == '__main__'):
