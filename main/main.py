@@ -81,7 +81,9 @@ def get_mi_by_ci():
 		result.close()
 
 	elif('submit' in request.form):
-		if(request.form['submit'] == 'submit'):
+
+		print('hii')
+		if(request.form['submit'] == 'login'):
 			try:
 				machine_id = request.form['machines']
 				session['machine_id'] = machine_id
@@ -189,7 +191,7 @@ def calllog():
 
 
 			not_want = ['customer_id', 'machine_id']
-			sel = select([cols fo cols in calls.__table__.columns where cols not in not_want]).where
+			sel = select([cols for cols in calls.__table__.columns if cols not in not_want]).where
 			(calls.c.machine_id == machine_id)
 			result = conn.execute(sel)
 
@@ -205,7 +207,7 @@ def calllog():
 			name = form.engineer_name.data
 			sel = select(
 				[engineers]
-			).where(engineers.c.engineer_name == name)
+			).where(engineers.c.engineers_name == name)
 
 			result = conn.execute(sel)
 			for row in result:

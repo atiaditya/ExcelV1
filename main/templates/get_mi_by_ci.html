@@ -7,40 +7,45 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        
-        <h2>Select the machine: </h2>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Make</th>
-                <th>Model</th>
-                <th>From Date</th>
-                <th>To Date</th>
-                <th>Type of contract</th>
-                <th>AMCV</th>
-                <th>Warranty</th>
-                <th>Free copies</th>
-                <th>Initial meter</th>
-                <th>Per copy charges</th>
-                <th>Select</th>
-            </tr>
-            {% for row in display %}
+        <form method = "POST" action = "#">
+            
+            <h2>Select the machine: </h2>
+            <table>
                 <tr>
-                    <td>{{row[0]}}</td>
-                    <td>{{row[2]}}</td>
-                    <td>{{row[3]}}</td>
-                    <td>{{row[4]}}</td>
-                    <td>{{row[7]}}</td>
-                    <td>{{row[5]}}</td>
-                    <td>{{row[6]}}</td>
-                    <td>{{row[8]}}</td>
-                    <td>{{row[9]}}</td>
-                    <td>{{row[10]}}</td>
-                    <td>{{row[11]}}</td>
-                    <td><input type = "radio" name = "machines" value = {{row[0]}}></td>
+                    <th>ID</th>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Type of contract</th>
+                    <th>AMCV</th>
+                    <th>Warranty</th>
+                    <th>Free copies</th>
+                    <th>Initial meter</th>
+                    <th>Per copy charges</th>
+                    <th>Select</th>
                 </tr>
-            {% endfor %}
-        </table>
+                {% for row in display %}
+                    <tr>
+                        <td>{{row[0]}}</td>
+                        <td>{{row[2]}}</td>
+                        <td>{{row[3]}}</td>
+                        <td>{{row[4]}}</td>
+                        <td>{{row[7]}}</td>
+                        <td>{{row[5]}}</td>
+                        <td>{{row[6]}}</td>
+                        <td>{{row[8]}}</td>
+                        <td>{{row[9]}}</td>
+                        <td>{{row[10]}}</td>
+                        <td>{{row[11]}}</td>
+                        <td><input type = "radio" name = "machines" value = {{row[0]}}></td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+            {{ form.submit }}
+
+        </form>
 
 {% endblock content %}
         

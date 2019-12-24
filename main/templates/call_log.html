@@ -9,13 +9,29 @@
 		{% endwith %}
         <form method = "POST" action = "#">
 			{{ form.hidden_tag() }}
+            <br>
+            <br>
             {{ form.call_id.label }}
+            <br>
+            <br>
             {{ form.call_id }}
+            <br>
+            <br>
             {{ form.present_mtr_rdg.label }}
+            <br>
+            <br>
             {{ form.present_mtr_rdg }}
+            <br>
+            <br>
             {{ form.engineer_name.label }}
+            <br>
+            <br>
             {{ form.engineer_name }}
-            {{ form2.submit }}
+            <br>
+            <br>
+            {{ form.submit(formnovalidate = "formnovalidate") }}
+            <br>
+            <br>
             <h2>Select the engineer: </h2>
             <table>
                 <tr>
@@ -31,20 +47,37 @@
                     </tr>
                 {% endfor %}
             </table>
+            <br>
+            <br>
             {{ form.call_time.label }}
             {{ form.call_time }}
+            <br>
+            <br>
             {{ form.call_reason.label }}
             {{ form.call_reason }}
+            <br>
+            <br>
             {{ form.region.label }}
             {{ form.region }}
+            <br>
+            <br>
             {{ form.broken_call_date.label }}
+
             {{ form.broken_call_date }}
+            <br>
+            <br>
             {{ form.broken_call_code.label }}
             {{ form.broken_call_code }}
+            <br>
+            <br>
             {{ form.cmrs.label }}
             {{ form.cmrs }}
+            <br>
+            <br>
             {{ form.remarks.label }}
             {{ form.remarks }}
+            <br>
+            <br>
             <input type = "submit" name = "submit" value = "submit">
 		</form>
 
@@ -75,8 +108,8 @@
                         <td>{{row[7]}}</td>
                         <td>{{row[8]}}</td>
                         <td>{{row[9]}}</td>
-                        <td>{{row[10]}</td>
-                        <td>{{row[11]}</td>
+                        <td>{{row[10]}}</td>
+                        <td>{{row[11]}}</td>
                         <td>{{row[12]}}</td>
                     </tr>
                 {% endfor %}
