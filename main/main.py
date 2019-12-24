@@ -30,11 +30,10 @@ def index():
 		if(request.form['submit'] == 'login'):
 
 			session['machine_id'] = form1.machine_id.data
-			return redirect(url_for('call_log'))
+			return redirect(url_for('calllog'))
 
 
 	elif(form2.validate_on_submit() and ('submit' in request.form)):
-		print('hii')
 		if(request.form['submit'] == 'enter'):
 
 			choice = form2.options.data
@@ -138,23 +137,22 @@ def add_customer():
 
 	form = AddCustomer()
 	if(form.validate_on_submit()):
-		customer_name = form.customer.data
-		machine_serial_number = form.msn.data
-		address = form.address.data
-		phone = form.phn.data
-		make_model = form.make_model.data
-		instal_date = form.install_date.data
-		per_copy_charges = form.per_copy_charges.data
-		services = []
 
-		insert_row = {"msn": machine_serial_number, "customer": customer_name, "address": address, "phn": phone, 
-						"make_model": make_model, "install_date": instal_date, "per_copy_charges": per_copy_charges, "services": services}
+		customer1 = form.customer1.data
+		customer2 = form.customer2.data
+		company1 = form.company1.data
+		company2 = form.company2.data
+		phone_no = form.phone_no.data
+		landline = form.landline.data
+		email = form.email.data
+		ins = customers.insert().values(company1 = company1, company2 = company2, customer1 = customer1,
+			customer2 = customer2, phone_no = phone_no, landline = landline, email = email)
+		try:
+			result = conn.execute(ins)
+		except Exception as e:
+			flash('Customer not inserted')
 
-		x = mongo.db.MRCObject.insert_one(insert_row)
-		flash('Entered succesfully')
-		return redirect(url_for('register'))
-
-	return render_template('register_form.html', form = form, title = "RegisterForm")
+	return render_template('add_customer.html', form=form)
 
 @app.route('/calllog', methods = ['GET', 'POST'])
 def calllog():
@@ -214,8 +212,6 @@ def calllog():
 				eng_records.append(row)
 
 			result.close()
-
-
 
 	except KeyError as k:
 		flash('Please go to homepage')

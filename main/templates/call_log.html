@@ -1,143 +1,85 @@
 {% extends "base.html" %}
 {% block content %}
-	<div><h1><center>Call Log</center></h1><div>
-	<table align="center" cellpadding="10" cellspacing="10">
-		<form method="POST">
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				{% for msg in messages %}
+					{{ msg }}
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+        <form method = "POST" action = "#">
 			{{ form.hidden_tag() }}
-
-			<tr>
-				<td>
-					{{ form.customer_name.label(class="myLabel") }}
-					{{ form.customer_name }}
-				</td>
-
-				<td>
-					{{ form.phone_no.label(class="myLabel") }}
-					{{ form.phone_no }}
-				</td>
-			</tr>
-
-			<tr>
-				<td>
-					{{ form.call_type.label(class="myLabel") }}
-					{{ form.call_type }}
-				</td>
-				<td>
-					{{ form.call_reason.label(class="myLabel") }}
-					{{ form.call_reason }}
-				</td>
-			</tr>
-			
-			<tr>
-				<td>
-					{{ form.present_mtr_rdg.label(class="myLabel") }}
-					{{ form.present_mtr_rdg }}
-				</td>
-				<td>
-					{{ form.call_time.label(class="myLabel") }}
-					{{ form.call_time(style="margin-left: 152px") }}
-
-				</td>
-			</tr>
-			
-			<tr>
-				<td>
-					{{ form.engineer_name.label(class="myLabel") }}
-					{{ form.engineer_name }}
-				</td>
-				<td>
-					{{ form.remarks.label(class="myLabel") }}
-					{{ form.remarks }}
-				</td>
-			</tr>
+            {{ form.call_id.label }}
+            {{ form.call_id }}
+            {{ form.present_mtr_rdg.label }}
+            {{ form.present_mtr_rdg }}
+            {{ form.engineer_name.label }}
+            {{ form.engineer_name }}
+            {{ form2.submit }}
+            <h2>Select the engineer: </h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Engineer</th>
+                    <th>Select</th>
+                </tr>
+                {% for row in eng_records %}
+                    <tr>
+                        <td>{{row[0]}}</td>
+                        <td>{{row[1]}}</td>
+                        <td><input type = "radio" name = "engineers" value = {{row[0]}}></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            {{ form.call_time.label }}
+            {{ form.call_time }}
+            {{ form.call_reason.label }}
+            {{ form.call_reason }}
+            {{ form.region.label }}
+            {{ form.region }}
+            {{ form.broken_call_date.label }}
+            {{ form.broken_call_date }}
+            {{ form.broken_call_code.label }}
+            {{ form.broken_call_code }}
+            {{ form.cmrs.label }}
+            {{ form.cmrs }}
+            {{ form.remarks.label }}
+            {{ form.remarks }}
+            <input type = "submit" name = "submit" value = "submit">
 		</form>
-	</table>
-	<p align="center">
-		{{ form.submit(class="gButton") }}
-	</p>
 
-	<table align="center" class = "blueTable">
-		<thead>
-			<tr>
-				<th>Date</th>
-				<th>Name</th>
-				<th>Engr. No.</th>
-				<th>Engr. Name</th>
-				<th>Meter Reading</th>
-				<th>Toner Supply Date</th>
-				<th>Drum</th>
-				<th>Developer</th>
-				<th>DBC</th>
-				<th>CBC</th>
-				<th>Doc. No.</th>
-				<th>SCN Received</th>
-				<th>Toner Yield</th>
-				<th>Drum Yield</th>
-				<th>Developer Yield</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for doc in res %}
-			<tr class = "{{ loop.cycle('odd', 'even') }}">
-				
-				<td>
-					{% if doc['call_date'] %}
-					{{ doc['call_date'] }}
-					{%  endif %}
-				</td>
-
-				<td>
-					{% if doc['customer1'] %}
-					{{ doc['customer1'] }}
-					{%  endif %}
-				</td>
-
-				<td>
-					{% if doc['engineer_id'] %}
-					{{ doc['engineer_id'] }}
-					{%  endif %}
-				</td>
-
-				<td>
-					{% if doc['engineer_name'] %}
-					{{ doc['engineer_name'] }}
-					{%  endif %}
-				</td>
-
-				<td>
-					{% if doc['present_mtr_rdg'] %}
-					{{ doc['present_mtr_rdg'] }}
-					{%  endif %}
-				</td>
-
-				<td></td>
-
-				<td>Y</td>
-
-				<td>Y</td>
-
-				<td></td>
-
-				<td></td>
-
-				<td>
-					{% if doc['docket_no'] %}
-					{{ doc['docket_no'] }}
-					{%  endif %}
-				</td>
-
-				<td>Y</td>
-
-				<td></td>
-
-				<td></td>
-
-				<td></td>
-		
-			</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-
-
+		<table>
+                <tr>
+                    <th>ID</th>
+                    <th>Present meter reading</th>
+                    <th>Engineer allocated</th>
+                    <th>Call time</th>
+                    <th>Call date</th>
+                    <th>Call reason</th>
+                    <th>Region</th>
+                    <th>Broken call date</th>
+                    <th>Broken call code</th>
+                    <th>Cmrs</th>
+                    <th>Remarks</th>
+                    <th>SCN status</th>
+                </tr>
+                {% for row in call_records %}
+                    <tr>
+                        <td>{{row[0]}}</td>
+                        <td>{{row[1]}}</td>
+                        <td>{{row[2]}}</td>
+                        <td>{{row[3]}}</td>
+                        <td>{{row[4]}}</td>
+                        <td>{{row[5]}}</td>
+                        <td>{{row[6]}}</td>
+                        <td>{{row[7]}}</td>
+                        <td>{{row[8]}}</td>
+                        <td>{{row[9]}}</td>
+                        <td>{{row[10]}</td>
+                        <td>{{row[11]}</td>
+                        <td>{{row[12]}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
 {% endblock content %}
+		

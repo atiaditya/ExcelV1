@@ -94,7 +94,7 @@ CREATE TABLE calls(
     broken_call_date DATE,
     broken_call_code VARCHAR(20),
     cmrs DECIMAL,
-    remarks VARCHAR(100)
+    remarks VARCHAR(100),
     scn_status BOOLEAN NOT NULL DEFAULT FALSE
 );
 
