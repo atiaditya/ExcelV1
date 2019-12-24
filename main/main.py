@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from forms import GetMI, GetCI, GetMIByCI, AddMachine, CallLogForm
+from forms import GetMI, GetCI, GetMIByCI, AddMachine, CallLog
 import psycopg2
 import sqlalchemy as db
 from sqlalchemy import *
@@ -18,7 +18,7 @@ engineers = db.Table('engineers', meta, autoload = True, autoload_with = engine)
 services = db.Table('services', meta, autoload = True, autoload_with = engine)
 customers = db.Table('customers', meta, autoload = True, autoload_with = engine)
 machines = db.Table('machines', meta, autoload = True, autoload_with = engine)
-call_log = db.Table('call_log', meta, autoload =True, autoload_with = engine)
+calls = db.Table('calls', meta, autoload =True, autoload_with = engine)
 
 @app.route('/', methods = ['GET', 'POST'])
 def index():
@@ -158,39 +158,69 @@ def add_customer():
 
 @app.route('/calllog', methods = ['GET', 'POST'])
 def calllog():
+
 	try:
+
 		machine_id = session['machine_id']
-		form = CallLogForm()
+		customer_id = session['customer_id']
 
-		sel = select(
-			[call_log.c.call_date, customers.c.customer1, call_log.c.engineer_id, 
-				engineers.c.engineer_name, call_log.c.present_mtr_rdg,
-					services.c.docket_no]
-		)
+		call_records = []
+		eng_records = []
 
-		st = sel.where(
-			and_(
-				call_log.c.machine_id == m_id,
-				call_log.c.engineer_id == engineers.c.engineer_id,
-				call_log.c.customer_id == customers.c.customer_id,
-				call_log.c.call_id == services.c.call_id
-			)
-		)
+		form = CallLog()
 
-		result = conn.execute(st)
-		display = []
-		for row in result:
-			display.append(row)
+		if(form.validate_on_submit()):
 
-		print(display)
-		print(len(display))
-		print(display[-3:])
-		res = display[-3:]
+			call_id = form.call_id.data
+			present_mtr_rdg = form.present_mtr_rdg.data
+			engineer_id = request.form['engineers']
+			call_time = form.call_time.data
+			call_reason = form.call_reason.data
+			region = form.region.data
+			broken_call_code = form.broken_call_code.data
+			broken_call_date = form.broken_call_date.data
+			cmrs = form.cmrs.data
+			remarks = form.remarks.data
 
-	except KeyError as e:
-		flash('Home page ki dobbey')
+			ins = calls.insert().values(call_id = call_id, customer_id= customer_id,
+			 machine_id = machine_id, present_mtr_rdg = present_mtr_rdg, engineer_allocated_id = engineer_id,
+			  call_time = call_time, call_reason = call_reason, region = region, broken_call_date = broken_call_date,
+			   broken_call_code = broken_call_code, cmrs = cmrs, remarks = remarks)
+
+			result = conn.execute(ins)
+
+
+			not_want = ['customer_id', 'machine_id']
+			sel = select([cols fo cols in calls.__table__.columns where cols not in not_want]).where
+			(calls.c.machine_id == machine_id)
+			result = conn.execute(sel)
+
+			for row in result:
+				call_records.append(row)
+
+			call_records = call_records[-3:]
+
+			result.close()
+
+		elif(('submit' in request.form) and request.form['submit'] == 'enter'):
+
+			name = form.engineer_name.data
+			sel = select(
+				[engineers]
+			).where(engineers.c.engineer_name == name)
+
+			result = conn.execute(sel)
+			for row in result:
+				eng_records.append(row)
+
+			result.close()
+
+
+
+	except KeyError as k:
+		flash('Please go to homepage')
 		
-	return render_template('call_log.html', form = form, res = res)
+	return render_template('call_log.html', form = form, call_records = call_records, eng_records = eng_records)
 
 if(__name__ == '__main__'):
 	app.run(debug=True)

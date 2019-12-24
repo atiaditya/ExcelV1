@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block content %}
+	<div><h1><center>Call Log</center></h1><div>
+	<table align="center" cellpadding="10" cellspacing="10">
+		<form method="POST">
+			{{ form.hidden_tag() }}
+
+			<tr>
+				<td>
+					{{ form.customer_name.label(class="myLabel") }}
+					{{ form.customer_name }}
+				</td>
+
+				<td>
+					{{ form.phone_no.label(class="myLabel") }}
+					{{ form.phone_no }}
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					{{ form.call_type.label(class="myLabel") }}
+					{{ form.call_type }}
+				</td>
+				<td>
+					{{ form.call_reason.label(class="myLabel") }}
+					{{ form.call_reason }}
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					{{ form.present_mtr_rdg.label(class="myLabel") }}
+					{{ form.present_mtr_rdg }}
+				</td>
+				<td>
+					{{ form.call_time.label(class="myLabel") }}
+					{{ form.call_time(style="margin-left: 152px") }}
+
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					{{ form.engineer_name.label(class="myLabel") }}
+					{{ form.engineer_name }}
+				</td>
+				<td>
+					{{ form.remarks.label(class="myLabel") }}
+					{{ form.remarks }}
+				</td>
+			</tr>
+		</form>
+	</table>
+	<p align="center">
+		{{ form.submit(class="gButton") }}
+	</p>
+
+	<table align="center" class = "blueTable">
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Name</th>
+				<th>Engr. No.</th>
+				<th>Engr. Name</th>
+				<th>Meter Reading</th>
+				<th>Toner Supply Date</th>
+				<th>Drum</th>
+				<th>Developer</th>
+				<th>DBC</th>
+				<th>CBC</th>
+				<th>Doc. No.</th>
+				<th>SCN Received</th>
+				<th>Toner Yield</th>
+				<th>Drum Yield</th>
+				<th>Developer Yield</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for doc in res %}
+			<tr class = "{{ loop.cycle('odd', 'even') }}">
+				
+				<td>
+					{% if doc['call_date'] %}
+					{{ doc['call_date'] }}
+					{%  endif %}
+				</td>
+
+				<td>
+					{% if doc['customer1'] %}
+					{{ doc['customer1'] }}
+					{%  endif %}
+				</td>
+
+				<td>
+					{% if doc['engineer_id'] %}
+					{{ doc['engineer_id'] }}
+					{%  endif %}
+				</td>
+
+				<td>
+					{% if doc['engineer_name'] %}
+					{{ doc['engineer_name'] }}
+					{%  endif %}
+				</td>
+
+				<td>
+					{% if doc['present_mtr_rdg'] %}
+					{{ doc['present_mtr_rdg'] }}
+					{%  endif %}
+				</td>
+
+				<td></td>
+
+				<td>Y</td>
+
+				<td>Y</td>
+
+				<td></td>
+
+				<td></td>
+
+				<td>
+					{% if doc['docket_no'] %}
+					{{ doc['docket_no'] }}
+					{%  endif %}
+				</td>
+
+				<td>Y</td>
+
+				<td></td>
+
+				<td></td>
+
+				<td></td>
+		
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+
+{% endblock content %}

@@ -1,3 +1,8 @@
+
+
+
+Old Content below(Python 3):
+
 customers
 machines
 services
@@ -49,27 +54,24 @@ CREATE TABLE machines(
 CREATE TABLE services(
     job_id serial PRIMARY KEY,
     customer_id INTEGER REFERENCES customers(customer_id),
-    call_id INTEGER REFERENCES call_log(call_id),
+    call_id INTEGER REFERENCES calls(call_id),
     machine_id VARCHAR(30) REFERENCES machines(machine_id),
     docket_no INTEGER NOT NULL,
-    td_date DATE NOT NULL DEFAULT CURRENT_DATE,
+    ccd DATE NOT NULL DEFAULT CURRENT_DATE,
     challan VARCHAR(30) NOT NULL,
-    prev_mtr_rdg INTEGER NOT NULL,
-    present_mtr_rdg INTEGER NOT NULL,
-    yield FLOAT(10) NOT NULL,
-    engineer_name VARCHAR(40) NOT NULL,
-    remarks VARCHAR(50),
-    
-    status VARCHAR(5) NOT NULL,
-    time_dispatched DATE NOT NULL,
-    time_arrived DATE NOT NULL,
-    call_completed DATE,
-    symptom VARCHAR(50),
-    cause VARCHAR(50),
-    action VARCHAR(50),
+    present_mtr_rdg DECIMAL NOT NULL,
+    engineer_id INTEGER NOT NULL REFERENCES engineers(engineer_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    scn_status BOOLEAN NOT NULL DEFAULT FALSE,
+    time_dispatched TIME NOT NULL,
+    time_arrived TIME NOT NULL,
+    symptom VARCHAR(100),
+    cause VARCHAR(100),
+    action VARCHAR(100),
     total_qty INTEGER NOT NULL,
-    total_cost FLOAT(10) NOT NULL
+    total_cost DECIMAL NOT NULL,
+    remarks VARCHAR(100)
 );
+
 
 CREATE TABLE service_parts(
     job_id INTEGER REFERENCES services(job_id),
@@ -79,21 +81,21 @@ CREATE TABLE service_parts(
     value FLOAT(10) NOT NULL
 );
 
-CREATE TABLE call_log(
+CREATE TABLE calls(
     call_id INTEGER PRIMARY KEY,
-	customer_id INTEGER REFERENCES customers(customer_id),
+    customer_id INTEGER REFERENCES customers(customer_id),
     machine_id VARCHAR(30) REFERENCES machines(machine_id),
-    present_mtr_rdg INTEGER NOT NULL,
-    engineer_id INTEGER REFERENCES engineers(engineer_id) ON DELETE CASCADE ON UPDATE CASCADE, 
-    remarks VARCHAR(50),
+    present_mtr_rdg DECIMAL,
+    engineer_allocated_id INTEGER REFERENCES engineers(engineer_id) ON DELETE CASCADE ON UPDATE CASCADE,
     call_time TIME NOT NULL,
     call_date DATE NOT NULL DEFAULT CURRENT_DATE,
-    callback BOOLEAN NOT NULL DEFAULT 0,
-    region VARCHAR(1) NOT NULL,
+    call_reason VARCHAR(100),
+    region VARCHAR(10) NOT NULL,
     broken_call_date DATE,
     broken_call_code VARCHAR(20),
-    docket_no INTEGER REFERENCES services(docket_no),
-    cmrs FLOAT(10)
+    cmrs DECIMAL,
+    remarks VARCHAR(100)
+    scn_status BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE engineers(
@@ -127,3 +129,4 @@ CREATE TABLE developer(
 CREATE TABLE toner(
     part_id INTEGER REFERENCES parts(part_id)
 );*/
+
