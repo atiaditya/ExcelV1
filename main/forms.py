@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField, RadioField, DateField, IntegerField, FloatField, DecimalField, TimeField
+from wtforms import StringField, SubmitField, SelectField, RadioField, DateField, IntegerField, FloatField, DecimalField, TimeField, TextAreaField
 from wtforms.validators import InputRequired, Length
 from wtforms.fields.html5 import DateTimeField, DateField, TimeField
 
@@ -10,7 +10,7 @@ class GetMI(FlaskForm):
 class GetCI(FlaskForm):
 	choices = [('customer', 'Customer'), ('company', 'Company')]
 	options = SelectField('Select Field', choices = choices, validators = [InputRequired()])
-	search_by_field = StringField('', validators = [InputRequired()])
+	search_by_field = StringField('Enter name', validators = [InputRequired()])
 	submit = SubmitField('enter')
 
 class GetMIByCI(FlaskForm):
@@ -44,27 +44,31 @@ class AddCustomer(FlaskForm):
 	submit = SubmitField('Submit')
 
 class AddService(FlaskForm):
+	customer_id = StringField('Customer ID', validators = [InputRequired()])
+	call_id = StringField('Call ID', validators = [InputRequired()])
+	machine_id = StringField('Machine ID', validators = [InputRequired()])
 	docket_no = IntegerField('Docket no', validators = [InputRequired()])
+	ccd = DateField('CCD', validators = [InputRequired()])
 	challan = StringField('Challan', validators = [InputRequired()])
-	prev_mtr_rdg = DecimalField('Previous meter reading', validators = [InputRequired()])
-	present_mtr_rdng = DecimalField('Present meter reading', validators = [InputRequired()])
-	yield_ = DecimalField('Yield', validators = [InputRequired()])
-	engineer_id = IntegerField('Engineer id')
+	present_mtr_rdg = DecimalField('Present meter reading', validators = [InputRequired()])
+	engineer_id = SelectField('Engineer', coerce = int, validators = [InputRequired()])
 	time_dispatched = TimeField('Time Dispatched', validators = [InputRequired()])
 	time_arrived = TimeField('Time Arrived', validators = [InputRequired()])
-	ccd = DateField('CCD', validators = [InputRequired()])
-	symptom = StringField('Symptom', validators = [InputRequired()])
-	cause = StringField('Cause', validators = [InputRequired()])
-	action = StringField('Action', validators = [InputRequired()])
-
-class CallLogForm(FlaskForm):
-	customer_name = StringField('Customer Name', validators = [InputRequired()])
-	phone_no = StringField('Phone Number', validators = [InputRequired()])
-	call_type = StringField('Call Type', validators = [InputRequired()])
-	#model_no = StringField('Model Number', validators = [InputRequired()])
-	call_reason = StringField('Call Reason', validators = [InputRequired()])
-	present_mtr_rdg = StringField('Meter Reading', validators = [InputRequired()])
-	call_time = TimeField('Call Time', format = '%Y-%m-%d')
-	engineer_name = StringField('Engineer Name', validators = [InputRequired()])
+	symptom = TextAreaField('Symptom', validators = [InputRequired()])
+	cause = TextAreaField('Cause', validators = [InputRequired()])
+	action = TextAreaField('Action', validators = [InputRequired()])
 	remarks = TextAreaField('Remarks')
 	submit = SubmitField('Submit')
+
+class CallLog(FlaskForm):
+	call_id = StringField('Call Id', validators = [InputRequired()])
+	present_mtr_rdg = DecimalField('Present meter reading', )
+	engineer_name = StringField('Engineer name', validators = [InputRequired()])
+	submit = SubmitField('enter')
+	call_time = TimeField('Call Time', validators = [InputRequired()])
+	call_reason = TextAreaField('Call reason')
+	region = StringField('Region', validators = [InputRequired()])
+	broken_call_date = DateField('Broken call date')
+	broken_call_code = StringField('Broken call code')
+	cmrs = DecimalField('cmrs')
+	remarks = TextAreaField('Remarks')

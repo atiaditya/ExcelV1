@@ -17,7 +17,7 @@
 }
 
 table{
-  width: 75%;
+  width: 100%;
 }
 
 .myLabel {
@@ -26,19 +26,47 @@ table{
   float: left;
 }
 
+.myLabel1{
+  font-size: 17px;
+  font-family: Verdana, Arial, Helvetica;
+  margin-left: 250px;
+}
+
+.myLabel2{
+  font-size: 17px;
+  font-family: Verdana, Arial, Helvetica;
+  margin-left: 25px;
+}
+
+
 textarea{
   float: right;
-  width: 60%;
+  width: 40%;
   height: 100px;
 }
 
 input[type=text] {
-  width: 60%;
+  width: 40%;
   height: 30px;
   box-sizing: border-box;
   padding: 7px 10px;
-  margin: 7px 0;
   float: right;
+}
+
+.myText1{
+  position: absolute;
+  top: 195px;
+  left: 410px;
+  right: 1000px;
+  height: 80px;
+  width: 100px;
+}
+
+.myText2{
+  position: absolute;
+  top: 150px;
+  left: 100px;
+  height: 80px;
 }
 
 input[type=text]:focus {
@@ -47,6 +75,18 @@ input[type=text]:focus {
 
 textarea:focus, input:focus {
   border: 2px solid #900;
+}
+
+input[type=time]{
+  float: right;
+}
+
+input[type=date]{
+  float: right;
+}
+
+select{
+  float: right;
 }
 
 .button_style {

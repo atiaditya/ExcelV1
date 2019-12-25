@@ -47,30 +47,6 @@
                     </tr>
                 {% endfor %}
             </table>
-            <input type = "submit" name = "submit" value = "submit">
-        <header class="header">
-            <h1 class="excel">Excel Technologies</h1>
-            <!--<div class="logo-box">
-                <img src="logo.png" alt="Logo" class="logo">
-            </div>-->
-            <div class="text-box">
-                <h1 class="heading-primary">
-                    <span class="heading-primary-main">Call Service</span>
-                    <span class="heading-primary-sub">Experience The Best</span>
-                </h1>
-                <!--<button onclick="window.location.href = 'http://127.0.0.1:5000/profile';" class="btn btn-white btn-animated">Record</button>-->
-		<form method = "POST", action = "/">
-			{{ form.hidden_tag() }}
-            
-    			{{ form.machine_serial_number.label(style='font-size:18px;color: white;font-family: "Lato", sans-serif;letter-spacing: 2px;') }}<br>
-
-    			{{ form.machine_serial_number }}
-           
-            <br>
-            <div style='margin-left: 50px'>
-			     {{ form.register(class= 'btn btn-animated', style = 'margin-right:16px') }}
-                {{ form.enter(class= 'btn btn-animated', style = 'margin-right:16px') }}
-            </div>
 		</form>
     </body>
 
