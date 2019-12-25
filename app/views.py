@@ -1,24 +1,21 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from forms import GetMI, GetCI, GetMIByCI, AddMachine, CallLog
+from app import app
+from app.forms import GetMI, GetCI, GetMIByCI, AddMachine, CallLog, AddService
 import psycopg2
 import sqlalchemy as db
 from sqlalchemy import *
 from sqlalchemy.sql import select, and_, or_, not_
 
-app = Flask(__name__)
-
-app.config['SECRET_KEY'] = 'f5a117a3ab54a2f5476857b652a0c8a6'
-
-conn_string = 'postgresql+psycopg2://postgres:aditya123@localhost/excel'
-engine = db.create_engine(conn_string)
+engine = db.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 conn = engine.connect()
-meta = MetaData()
+meta = db.MetaData()
 
 engineers = db.Table('engineers', meta, autoload = True, autoload_with = engine)
 services = db.Table('services', meta, autoload = True, autoload_with = engine)
 customers = db.Table('customers', meta, autoload = True, autoload_with = engine)
 machines = db.Table('machines', meta, autoload = True, autoload_with = engine)
 calls = db.Table('calls', meta, autoload =True, autoload_with = engine)
+
 
 @app.route('/', methods = ['GET', 'POST'])
 def index():
@@ -200,7 +197,6 @@ def calllog():
 			result.close()
 
 		sel = select([calls]).where(calls.c.machine_id == machine_id)
-		#print(sel)
 		result = conn.execute(sel)
 
 		for row in result:
@@ -258,7 +254,3 @@ def scn():
 			flash('Exception')
 
 	return render_template('scn.html', form = form, pre = pre)
-
-if(__name__ == '__main__'):
-	app.run(debug=True)
-		
