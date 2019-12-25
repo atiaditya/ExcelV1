@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1><center>SCN</center></h1><br><br>
+        <table align="center" cellpadding="10" cellspacing="20">
+            <form method = "POST" action = "#">
+                {{ form.hidden_tag() }}
+
+                <tr>
+                    <td colspan="2">
+                        {{ form.customer_id.label(class = 'myLabel1') }}
+                        {{ form.customer_id( value = pre.customer_id) }}
+                    </td>
+                    <td colspan="2">
+                        {{ form.machine_id.label(class = 'myLabel2') }}
+                        {{ form.machine_id( value = pre.machine_id) }}
+                        
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        {{ form.call_id.label(class = 'myLabel') }}
+                        {{ form.call_id }}
+                    </td>
+                    <td>
+                        {{ form.docket_no.label(class = 'myLabel') }}
+                        {{ form.docket_no }}
+                    </td>
+                    <td>
+                        {{ form.ccd.label(class = 'myLabel') }}
+                        {{ form.ccd }} 
+                    </td>
+                    <td>
+                        {{ form.challan.label(class = 'myLabel') }}
+                        {{ form.challan }}
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        {{ form.present_mtr_rdg.label(class = 'myLabel') }}
+                        {{ form.present_mtr_rdg }}
+                    </td>
+                    <td>
+                        {{ form.engineer_id.label(class = 'myLabel') }}
+                        {{ form.engineer_id }}
+                    </td>
+                    <td>
+                        {{ form.time_dispatched.label(class = 'myLabel') }}
+                        {{ form.time_dispatched }}
+                    </td>
+                    <td>
+                        {{ form.time_arrived.label(class = 'myLabel') }}
+                        {{ form.time_arrived }}
+                    </td>
+                </tr>
+                
+                <tr>    
+                    <td>
+                        {{ form.symptom.label(class = 'myLabel') }}
+                        {{ form.symptom }}
+                    </td>
+                    <td>
+                        {{ form.cause.label(class = 'myLabel') }}
+                        {{ form.cause }}
+                    </td>
+                    <td colspan="2">
+                        {{ form.action.label(class = 'myLabel') }}
+                        {{ form.action }}
+                    </td>
+                </tr>
+                
+                <tr> 
+                    <td colspan="4" align="center">
+                        {{ form.remarks.label }}
+                        {{ form.remarks }}
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td colspan="3">
+                        {{ form.submit(class = "gButton") }}
+                    </td>
+                </tr>      
+            </form>
+        </table>
+{% endblock %}

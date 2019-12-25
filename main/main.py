@@ -215,6 +215,50 @@ def calllog():
 		
 	return render_template('call_log.html', form = form, call_records = call_records, eng_records = eng_records)
 
+@app.route('/scn', methods = ['GET', 'POST'])
+def scn():
+	form = AddService()
+	m_id = session['machine_id']
+	cust_id = session['customer_id']
+	pre = {'machine_id': m_id, 'customer_id': cust_id}
+
+	sel = select(
+		[engineers]
+	)
+	result = conn.execute(sel)
+	lis = []
+	for row in result:
+		lis.append(row)
+
+	form.engineer_id.choices = lis
+
+	if(form.validate_on_submit()):
+		docket_no = form.docket_no.data
+		ccd = form.ccd.data
+		challan = form.challan.data
+		present_mtr_rdg = form.present_mtr_rdg.data
+		engineer_id = form.engineer_id.data
+		time_dispatched = form.time_dispatched.data
+		time_arrived = form.time_arrived.data
+		symptom = form.symptom.data
+		cause = form.cause.data
+		action = form.action.data
+		total_qty = 10
+		total_cost = 1000
+		remarks = form.remarks.data
+
+		insert_query = services.insert().values(customer_id = cust_id, machine_id = m_id,
+			docket_no = docket_no, ccd = ccd, challan = challan, present_mtr_rdg = present_mtr_rdg,
+			engineer_id = engineer_id, time_dispatched = time_dispatched, time_arrived = time_arrived,
+			symptom = symptom, cause = cause, action = action, total_qty =total_qty, total_cost = total_cost,remarks = remarks)
+
+		try:
+			result = conn.execute(insert_query)
+		except:
+			flash('Exception')
+
+	return render_template('scn.html', form = form, pre = pre)
+
 if(__name__ == '__main__'):
 	app.run(debug=True)
 		
