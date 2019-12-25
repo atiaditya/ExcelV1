@@ -59,7 +59,7 @@ class AddService(FlaskForm):
 
 class CallLog(FlaskForm):
 	call_id = StringField('Call Id', validators = [InputRequired()])
-	present_mtr_rdg = DecimalField('Present meter reading', )
+	present_mtr_rdg = DecimalField('Present meter reading' )
 	engineer_name = StringField('Engineer name', validators = [InputRequired()])
 	submit = SubmitField('enter')
 	call_time = TimeField('Call Time', validators = [InputRequired()])

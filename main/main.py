@@ -82,7 +82,6 @@ def get_mi_by_ci():
 
 	elif('submit' in request.form):
 
-		print('hii')
 		if(request.form['submit'] == 'login'):
 			try:
 				machine_id = request.form['machines']
@@ -158,18 +157,18 @@ def add_customer():
 
 @app.route('/calllog', methods = ['GET', 'POST'])
 def calllog():
-
+	form = CallLog()
+	call_records = []
+	eng_records = []
+	
 	try:
 
 		machine_id = session['machine_id']
 		customer_id = session['customer_id']
-
-		call_records = []
-		eng_records = []
-
-		form = CallLog()
-
+		
 		if(form.validate_on_submit()):
+
+			print('inserting')
 
 			call_id = form.call_id.data
 			present_mtr_rdg = form.present_mtr_rdg.data
@@ -189,31 +188,27 @@ def calllog():
 
 			result = conn.execute(ins)
 
-
-			not_want = ['customer_id', 'machine_id']
-			sel = select([cols for cols in calls.__table__.columns if cols not in not_want]).where
-			(calls.c.machine_id == machine_id)
-			result = conn.execute(sel)
-
-			for row in result:
-				call_records.append(row)
-
-			call_records = call_records[-3:]
-
-			result.close()
-
 		elif(('submit' in request.form) and request.form['submit'] == 'enter'):
-
+			print('entering')
 			name = form.engineer_name.data
-			sel = select(
-				[engineers]
-			).where(engineers.c.engineers_name == name)
+			st = select([engineers]).where(engineers.c.engineers_name == name)
 
-			result = conn.execute(sel)
+			result = conn.execute(st)
 			for row in result:
 				eng_records.append(row)
 
 			result.close()
+
+		sel = select([calls]).where(calls.c.machine_id == machine_id)
+		#print(sel)
+		result = conn.execute(sel)
+
+		for row in result:
+			call_records.append(row)
+
+		call_records = call_records[-3:]
+
+		result.close()
 
 	except KeyError as k:
 		flash('Please go to homepage')
