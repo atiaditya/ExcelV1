@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				{% for msg in messages %}
+					{{ msg }}
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+        <div class>
+		  <table class>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Call ID</th>
+                        <th>Docket no</th>
+                        <th>CCD</th>
+                        <th>Challan</th>
+                        <th>Present meter reading</th>
+                        <th>Engineer ID</th>
+                        <th>SCN Status</th>
+                        <th>Time dispatched</th>
+                        <th>Time arrived</th>
+                        <th>Symptom</th>
+                        <th>Cause</th>
+                        <th>Action</th>
+                        <th>Total qty</th>
+                        <th>Total cost</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in display %}
+                        <tr>
+                            <td>{{row[0]}}</td>
+                            <td>{{row[2]}}</td>
+                            <td>{{row[4]}}</td>
+                            <td>{{row[5]}}</td>
+                            <td>{{row[6]}}</td>
+                            <td>{{row[7]}}</td>
+                            <td>{{row[8]}}</td>
+                            <td>{{row[9]}}</td>
+                            <td>{{row[10]}}</td>
+                            <td>{{row[11]}}</td>
+                            <td>{{row[12]}}</td>
+                            <td>{{row[13]}}</td>
+                            <td>{{row[14]}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+{% endblock content %}
+		

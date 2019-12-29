@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from app import app
-from app.forms import GetMI, GetCI, GetMIByCI, AddMachine, CallLog, AddService
+from app.forms import GetMI, GetCI, GetMIByCI, AddMachine, CallLog, AddService, AddCustomer
 import psycopg2
 import sqlalchemy as db
 from sqlalchemy import *
@@ -254,3 +254,15 @@ def scn():
 			flash('Exception')
 
 	return render_template('scn.html', form = form, pre = pre)
+
+
+@app.route('/mrc', methods = ['GET', 'POST'])
+def mrc():
+	machine_id = session['machine_id']
+	sel = select([services]).where(services.c.machine_id == machine_id)
+	result = conn.execute(sel)
+	display = []
+	for row in result:
+		display.append(row)
+
+	return render_template('mrc.html', display = display)

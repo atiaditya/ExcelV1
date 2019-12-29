@@ -33,7 +33,7 @@
             <br>
             <br>
             <h2>Select the engineer: </h2>
-            <table>
+            <table class = "bluetable">
                 <tr>
                     <th>ID</th>
                     <th>Engineer</th>
@@ -80,39 +80,44 @@
             <br>
             <input type = "submit" name = "submit" value = "submit">
 		</form>
-
-		<table>
-                <tr>
-                    <th>ID</th>
-                    <th>Present meter reading</th>
-                    <th>Engineer allocated</th>
-                    <th>Call time</th>
-                    <th>Call date</th>
-                    <th>Call reason</th>
-                    <th>Region</th>
-                    <th>Broken call date</th>
-                    <th>Broken call code</th>
-                    <th>Cmrs</th>
-                    <th>Remarks</th>
-                    <th>SCN status</th>
-                </tr>
-                {% for row in call_records %}
+        <div class>
+		  <table class>
+                <thead>
                     <tr>
-                        <td>{{row[0]}}</td>
-                        <td>{{row[3]}}</td>
-                        <td>{{row[4]}}</td>
-                        <td>{{row[5]}}</td>
-                        <td>{{row[6]}}</td>
-                        <td>{{row[7]}}</td>
-                        <td>{{row[8]}}</td>
-                        <td>{{row[9]}}</td>
-                        <td>{{row[10]}}</td>
-                        <td>{{row[11]}}</td>
-                        <td>{{row[12]}}</td>
-                        <td>{{row[13]}}</td>
-                        <td>{{row[14]}}</td>
+                        <th>ID</th>
+                        <th>Present meter reading</th>
+                        <th>Engineer allocated</th>
+                        <th>Call time</th>
+                        <th>Call date</th>
+                        <th>Call reason</th>
+                        <th>Region</th>
+                        <th>Broken call date</th>
+                        <th>Broken call code</th>
+                        <th>Cmrs</th>
+                        <th>Remarks</th>
+                        <th>SCN status</th>
                     </tr>
-                {% endfor %}
+                </thead>
+                <tbody>
+                    {% for row in call_records %}
+                        <tr>
+                            <td>{{row[0]}}</td>
+                            <td>{{row[3]}}</td>
+                            <td>{{row[4]}}</td>
+                            <td>{{row[5]}}</td>
+                            <td>{{row[6]}}</td>
+                            <td>{{row[7]}}</td>
+                            <td>{{row[8]}}</td>
+                            <td>{{row[9]}}</td>
+                            <td>{{row[10]}}</td>
+                            <td>{{row[11]}}</td>
+                            <td>{{row[12]}}</td>
+                            <td>{{row[13]}}</td>
+                            <td>{{row[14]}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </table>
+        </div>
 {% endblock content %}
 		
